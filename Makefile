@@ -83,4 +83,9 @@ $(SWIFT_OPENAPI_GENERATOR_BIN): $(SWIFT_OPENAPI_GENERATOR_CLONE_DIR)
 $(OUTPUT_DIRECTORY):
 	mkdir -p "$@"
 
-.PHONY: help generate build clean clean-all dump
+pull-spec:  # Pull the latest OpenAPI spec from Supabase Auth repository.
+	@echo "Pulling latest OpenAPI spec from Supabase Auth repository..."
+	curl -o "$(OPENAPI_YAML_PATH)" "https://raw.githubusercontent.com/supabase/auth/refs/heads/master/openapi.yaml"
+	@echo "OpenAPI spec updated successfully at $(OPENAPI_YAML_PATH)"
+
+.PHONY: help generate build clean clean-all dump pull-spec
