@@ -1557,8 +1557,8 @@ public enum Components {
             ///
             /// - Remark: Generated from `#/components/schemas/MFAFactorSchema/factor_type`.
             public var factorType: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/MFAFactorSchema/webauthn_credential`.
-            public var webauthnCredential: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MFAFactorSchema/web_authn_credential`.
+            public var webAuthnCredential: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MFAFactorSchema/phone`.
             public var phone: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MFAFactorSchema/created_at`.
@@ -1574,7 +1574,7 @@ public enum Components {
             ///   - status: Usually one of:
             ///   - friendlyName:
             ///   - factorType: Usually one of:
-            ///   - webauthnCredential:
+            ///   - webAuthnCredential:
             ///   - phone:
             ///   - createdAt:
             ///   - updatedAt:
@@ -1584,7 +1584,7 @@ public enum Components {
                 status: Swift.String? = nil,
                 friendlyName: Swift.String? = nil,
                 factorType: Swift.String? = nil,
-                webauthnCredential: Swift.String? = nil,
+                webAuthnCredential: Swift.String? = nil,
                 phone: Swift.String? = nil,
                 createdAt: Foundation.Date? = nil,
                 updatedAt: Foundation.Date? = nil,
@@ -1594,7 +1594,7 @@ public enum Components {
                 self.status = status
                 self.friendlyName = friendlyName
                 self.factorType = factorType
-                self.webauthnCredential = webauthnCredential
+                self.webAuthnCredential = webAuthnCredential
                 self.phone = phone
                 self.createdAt = createdAt
                 self.updatedAt = updatedAt
@@ -1605,7 +1605,7 @@ public enum Components {
                 case status
                 case friendlyName = "friendly_name"
                 case factorType = "factor_type"
-                case webauthnCredential = "webauthn_credential"
+                case webAuthnCredential = "web_authn_credential"
                 case phone
                 case createdAt = "created_at"
                 case updatedAt = "updated_at"
@@ -1738,67 +1738,300 @@ public enum Components {
             /// UNIX seconds of the timestamp past which the challenge should not be verified.
             ///
             /// - Remark: Generated from `#/components/schemas/WebAuthnChallengeResponse/expires_at`.
-            public var expiresAt: Swift.Int?
-            /// - Remark: Generated from `#/components/schemas/WebAuthnChallengeResponse/webauthn`.
-            @frozen public enum WebauthnPayload: Codable, Hashable, Sendable {
-                public enum CodingKeys: String, CodingKey {
-                    case _type = "type"
-                }
-                public init(from decoder: any Decoder) throws {
-                    let container = try decoder.container(keyedBy: CodingKeys.self)
-                    let discriminator = try container.decode(
-                        Swift.String.self,
-                        forKey: ._type
-                    )
-                    switch discriminator {
-                    default:
-                        throw Swift.DecodingError.unknownOneOfDiscriminator(
-                            discriminatorKey: CodingKeys._type,
-                            discriminatorValue: discriminator,
-                            codingPath: decoder.codingPath
-                        )
-                    }
-                }
-                public func encode(to encoder: any Encoder) throws {
-                    switch self {
-                    }
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/WebAuthnChallengeResponse/webauthn`.
-            public var webauthn: Components.Schemas.WebAuthnChallengeResponse.WebauthnPayload
+            public var expiresAt: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/WebAuthnChallengeResponse/credential_request_options`.
+            public var credentialRequestOptions: Components.Schemas.CredentialRequestOptions?
+            /// - Remark: Generated from `#/components/schemas/WebAuthnChallengeResponse/credential_creation_options`.
+            public var credentialCreationOptions: Components.Schemas.CredentialCreationOptions?
             /// Creates a new `WebAuthnChallengeResponse`.
             ///
             /// - Parameters:
             ///   - id: ID of the challenge.
             ///   - _type: Type of the challenge.
             ///   - expiresAt: UNIX seconds of the timestamp past which the challenge should not be verified.
-            ///   - webauthn:
+            ///   - credentialRequestOptions:
+            ///   - credentialCreationOptions:
             public init(
                 id: Swift.String,
                 _type: Components.Schemas.WebAuthnChallengeResponse._TypePayload,
-                expiresAt: Swift.Int? = nil,
-                webauthn: Components.Schemas.WebAuthnChallengeResponse.WebauthnPayload
+                expiresAt: Swift.Int,
+                credentialRequestOptions: Components.Schemas.CredentialRequestOptions? = nil,
+                credentialCreationOptions: Components.Schemas.CredentialCreationOptions? = nil
             ) {
                 self.id = id
                 self._type = _type
                 self.expiresAt = expiresAt
-                self.webauthn = webauthn
+                self.credentialRequestOptions = credentialRequestOptions
+                self.credentialCreationOptions = credentialCreationOptions
             }
             public enum CodingKeys: String, CodingKey {
                 case id
                 case _type = "type"
                 case expiresAt = "expires_at"
-                case webauthn
+                case credentialRequestOptions = "credential_request_options"
+                case credentialCreationOptions = "credential_creation_options"
             }
         }
-        /// PublicKeyCredentialRequestOptions for WebAuthn authentication
+        /// WebAuthn credential assertion options
+        ///
+        /// - Remark: Generated from `#/components/schemas/CredentialAssertion`.
+        public struct CredentialAssertion: Codable, Hashable, Sendable {
+            /// A random challenge generated by the server, base64url encoded
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/challenge`.
+            public var challenge: Swift.String
+            /// The relying party's identifier (usually the domain name)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/rpId`.
+            public var rpId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/AllowCredentialsPayload`.
+            public struct AllowCredentialsPayloadPayload: Codable, Hashable, Sendable {
+                /// Credential ID, base64url encoded
+                ///
+                /// - Remark: Generated from `#/components/schemas/CredentialAssertion/AllowCredentialsPayload/id`.
+                public var id: Swift.String
+                /// Type of the credential
+                ///
+                /// - Remark: Generated from `#/components/schemas/CredentialAssertion/AllowCredentialsPayload/type`.
+                @frozen public enum _TypePayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case publicKey = "public-key"
+                }
+                /// Type of the credential
+                ///
+                /// - Remark: Generated from `#/components/schemas/CredentialAssertion/AllowCredentialsPayload/type`.
+                public var _type: Components.Schemas.CredentialAssertion.AllowCredentialsPayloadPayload._TypePayload
+                /// Creates a new `AllowCredentialsPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - id: Credential ID, base64url encoded
+                ///   - _type: Type of the credential
+                public init(
+                    id: Swift.String,
+                    _type: Components.Schemas.CredentialAssertion.AllowCredentialsPayloadPayload._TypePayload
+                ) {
+                    self.id = id
+                    self._type = _type
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case id
+                    case _type = "type"
+                }
+            }
+            /// List of credentials acceptable for this authentication
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/allowCredentials`.
+            public typealias AllowCredentialsPayload = [Components.Schemas.CredentialAssertion.AllowCredentialsPayloadPayload]
+            /// List of credentials acceptable for this authentication
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/allowCredentials`.
+            public var allowCredentials: Components.Schemas.CredentialAssertion.AllowCredentialsPayload
+            /// Time (in milliseconds) that the user has to respond to the authentication prompt
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/timeout`.
+            public var timeout: Swift.Int
+            /// The relying party's requirements for user verification
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/userVerification`.
+            @frozen public enum UserVerificationPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                case required = "required"
+                case preferred = "preferred"
+                case discouraged = "discouraged"
+            }
+            /// The relying party's requirements for user verification
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/userVerification`.
+            public var userVerification: Components.Schemas.CredentialAssertion.UserVerificationPayload?
+            /// Additional parameters requesting additional processing by the client
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/extensions`.
+            public var extensions: OpenAPIRuntime.OpenAPIObjectContainer?
+            /// Status of the credential assertion
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/status`.
+            @frozen public enum StatusPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                case ok = "ok"
+                case failed = "failed"
+            }
+            /// Status of the credential assertion
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/status`.
+            public var status: Components.Schemas.CredentialAssertion.StatusPayload?
+            /// Error message if the assertion failed
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/errorMessage`.
+            public var errorMessage: Swift.String?
+            /// User handle, base64url encoded
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/userHandle`.
+            public var userHandle: Swift.String?
+            /// Type of authenticator to use
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/authenticatorAttachment`.
+            @frozen public enum AuthenticatorAttachmentPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                case platform = "platform"
+                case crossPlatform = "cross-platform"
+            }
+            /// Type of authenticator to use
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialAssertion/authenticatorAttachment`.
+            public var authenticatorAttachment: Components.Schemas.CredentialAssertion.AuthenticatorAttachmentPayload?
+            /// Creates a new `CredentialAssertion`.
+            ///
+            /// - Parameters:
+            ///   - challenge: A random challenge generated by the server, base64url encoded
+            ///   - rpId: The relying party's identifier (usually the domain name)
+            ///   - allowCredentials: List of credentials acceptable for this authentication
+            ///   - timeout: Time (in milliseconds) that the user has to respond to the authentication prompt
+            ///   - userVerification: The relying party's requirements for user verification
+            ///   - extensions: Additional parameters requesting additional processing by the client
+            ///   - status: Status of the credential assertion
+            ///   - errorMessage: Error message if the assertion failed
+            ///   - userHandle: User handle, base64url encoded
+            ///   - authenticatorAttachment: Type of authenticator to use
+            public init(
+                challenge: Swift.String,
+                rpId: Swift.String,
+                allowCredentials: Components.Schemas.CredentialAssertion.AllowCredentialsPayload,
+                timeout: Swift.Int,
+                userVerification: Components.Schemas.CredentialAssertion.UserVerificationPayload? = nil,
+                extensions: OpenAPIRuntime.OpenAPIObjectContainer? = nil,
+                status: Components.Schemas.CredentialAssertion.StatusPayload? = nil,
+                errorMessage: Swift.String? = nil,
+                userHandle: Swift.String? = nil,
+                authenticatorAttachment: Components.Schemas.CredentialAssertion.AuthenticatorAttachmentPayload? = nil
+            ) {
+                self.challenge = challenge
+                self.rpId = rpId
+                self.allowCredentials = allowCredentials
+                self.timeout = timeout
+                self.userVerification = userVerification
+                self.extensions = extensions
+                self.status = status
+                self.errorMessage = errorMessage
+                self.userHandle = userHandle
+                self.authenticatorAttachment = authenticatorAttachment
+            }
+            public enum CodingKeys: String, CodingKey {
+                case challenge
+                case rpId
+                case allowCredentials
+                case timeout
+                case userVerification
+                case extensions
+                case status
+                case errorMessage
+                case userHandle
+                case authenticatorAttachment
+            }
+        }
+        /// WebAuthn credential request (for the response from the client)
+        ///
+        /// - Remark: Generated from `#/components/schemas/CredentialRequest`.
+        public struct CredentialRequest: Codable, Hashable, Sendable {
+            /// Base64url encoding of the credential ID
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialRequest/id`.
+            public var id: Swift.String
+            /// Base64url encoding of the credential ID (same as id)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialRequest/rawId`.
+            public var rawId: Swift.String
+            /// Type of the credential
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialRequest/type`.
+            @frozen public enum _TypePayload: String, Codable, Hashable, Sendable, CaseIterable {
+                case publicKey = "public-key"
+            }
+            /// Type of the credential
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialRequest/type`.
+            public var _type: Components.Schemas.CredentialRequest._TypePayload
+            /// - Remark: Generated from `#/components/schemas/CredentialRequest/response`.
+            public struct ResponsePayload: Codable, Hashable, Sendable {
+                /// Base64url encoding of the client data
+                ///
+                /// - Remark: Generated from `#/components/schemas/CredentialRequest/response/clientDataJSON`.
+                public var clientDataJSON: Swift.String
+                /// Base64url encoding of the authenticator data
+                ///
+                /// - Remark: Generated from `#/components/schemas/CredentialRequest/response/authenticatorData`.
+                public var authenticatorData: Swift.String
+                /// Base64url encoding of the signature
+                ///
+                /// - Remark: Generated from `#/components/schemas/CredentialRequest/response/signature`.
+                public var signature: Swift.String
+                /// Base64url encoding of the user handle
+                ///
+                /// - Remark: Generated from `#/components/schemas/CredentialRequest/response/userHandle`.
+                public var userHandle: Swift.String
+                /// Creates a new `ResponsePayload`.
+                ///
+                /// - Parameters:
+                ///   - clientDataJSON: Base64url encoding of the client data
+                ///   - authenticatorData: Base64url encoding of the authenticator data
+                ///   - signature: Base64url encoding of the signature
+                ///   - userHandle: Base64url encoding of the user handle
+                public init(
+                    clientDataJSON: Swift.String,
+                    authenticatorData: Swift.String,
+                    signature: Swift.String,
+                    userHandle: Swift.String
+                ) {
+                    self.clientDataJSON = clientDataJSON
+                    self.authenticatorData = authenticatorData
+                    self.signature = signature
+                    self.userHandle = userHandle
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case clientDataJSON
+                    case authenticatorData
+                    case signature
+                    case userHandle
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/CredentialRequest/response`.
+            public var response: Components.Schemas.CredentialRequest.ResponsePayload
+            /// Client extension results
+            ///
+            /// - Remark: Generated from `#/components/schemas/CredentialRequest/clientExtensionResults`.
+            public var clientExtensionResults: OpenAPIRuntime.OpenAPIObjectContainer?
+            /// Creates a new `CredentialRequest`.
+            ///
+            /// - Parameters:
+            ///   - id: Base64url encoding of the credential ID
+            ///   - rawId: Base64url encoding of the credential ID (same as id)
+            ///   - _type: Type of the credential
+            ///   - response:
+            ///   - clientExtensionResults: Client extension results
+            public init(
+                id: Swift.String,
+                rawId: Swift.String,
+                _type: Components.Schemas.CredentialRequest._TypePayload,
+                response: Components.Schemas.CredentialRequest.ResponsePayload,
+                clientExtensionResults: OpenAPIRuntime.OpenAPIObjectContainer? = nil
+            ) {
+                self.id = id
+                self.rawId = rawId
+                self._type = _type
+                self.response = response
+                self.clientExtensionResults = clientExtensionResults
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case rawId
+                case _type = "type"
+                case response
+                case clientExtensionResults
+            }
+        }
+        /// Options for requesting an assertion
         ///
         /// - Remark: Generated from `#/components/schemas/CredentialRequestOptions`.
         public struct CredentialRequestOptions: Codable, Hashable, Sendable {
             /// A challenge to be signed by the authenticator
             ///
             /// - Remark: Generated from `#/components/schemas/CredentialRequestOptions/challenge`.
-            public var challenge: Swift.String
+            public var challenge: OpenAPIRuntime.Base64EncodedData?
             /// Time (in milliseconds) that the caller is willing to wait for the call to complete
             ///
             /// - Remark: Generated from `#/components/schemas/CredentialRequestOptions/timeout`.
@@ -1807,8 +2040,6 @@ public enum Components {
             ///
             /// - Remark: Generated from `#/components/schemas/CredentialRequestOptions/rpId`.
             public var rpId: Swift.String?
-            /// List of acceptable credentials for authentication
-            ///
             /// - Remark: Generated from `#/components/schemas/CredentialRequestOptions/allowCredentials`.
             public var allowCredentials: [Components.Schemas.PublicKeyCredentialDescriptor]?
             /// User verification requirement
@@ -1823,50 +2054,26 @@ public enum Components {
             ///
             /// - Remark: Generated from `#/components/schemas/CredentialRequestOptions/userVerification`.
             public var userVerification: Components.Schemas.CredentialRequestOptions.UserVerificationPayload?
-            /// - Remark: Generated from `#/components/schemas/CredentialRequestOptions/HintsPayload`.
-            @frozen public enum HintsPayloadPayload: String, Codable, Hashable, Sendable, CaseIterable {
-                case securityKey = "security-key"
-                case clientDevice = "client-device"
-                case hybrid = "hybrid"
-            }
-            /// Hints for the browser about what types of authenticators to show
-            ///
-            /// - Remark: Generated from `#/components/schemas/CredentialRequestOptions/hints`.
-            public typealias HintsPayload = [Components.Schemas.CredentialRequestOptions.HintsPayloadPayload]
-            /// Hints for the browser about what types of authenticators to show
-            ///
-            /// - Remark: Generated from `#/components/schemas/CredentialRequestOptions/hints`.
-            public var hints: Components.Schemas.CredentialRequestOptions.HintsPayload?
-            /// WebAuthn extensions to enable
-            ///
-            /// - Remark: Generated from `#/components/schemas/CredentialRequestOptions/extensions`.
-            public var extensions: OpenAPIRuntime.OpenAPIObjectContainer?
             /// Creates a new `CredentialRequestOptions`.
             ///
             /// - Parameters:
             ///   - challenge: A challenge to be signed by the authenticator
             ///   - timeout: Time (in milliseconds) that the caller is willing to wait for the call to complete
             ///   - rpId: Relying Party ID
-            ///   - allowCredentials: List of acceptable credentials for authentication
+            ///   - allowCredentials:
             ///   - userVerification: User verification requirement
-            ///   - hints: Hints for the browser about what types of authenticators to show
-            ///   - extensions: WebAuthn extensions to enable
             public init(
-                challenge: Swift.String,
+                challenge: OpenAPIRuntime.Base64EncodedData? = nil,
                 timeout: Swift.Int? = nil,
                 rpId: Swift.String? = nil,
                 allowCredentials: [Components.Schemas.PublicKeyCredentialDescriptor]? = nil,
-                userVerification: Components.Schemas.CredentialRequestOptions.UserVerificationPayload? = nil,
-                hints: Components.Schemas.CredentialRequestOptions.HintsPayload? = nil,
-                extensions: OpenAPIRuntime.OpenAPIObjectContainer? = nil
+                userVerification: Components.Schemas.CredentialRequestOptions.UserVerificationPayload? = nil
             ) {
                 self.challenge = challenge
                 self.timeout = timeout
                 self.rpId = rpId
                 self.allowCredentials = allowCredentials
                 self.userVerification = userVerification
-                self.hints = hints
-                self.extensions = extensions
             }
             public enum CodingKeys: String, CodingKey {
                 case challenge
@@ -1874,32 +2081,26 @@ public enum Components {
                 case rpId
                 case allowCredentials
                 case userVerification
-                case hints
-                case extensions
             }
         }
-        /// PublicKeyCredentialCreationOptions for WebAuthn registration
+        /// Options for creating a new credential
         ///
         /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions`.
         public struct CredentialCreationOptions: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/rp`.
             public struct RpPayload: Codable, Hashable, Sendable {
-                /// Relying Party ID (usually the domain)
-                ///
                 /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/rp/id`.
-                public var id: Swift.String
-                /// Human-readable Relying Party name
-                ///
+                public var id: Swift.String?
                 /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/rp/name`.
-                public var name: Swift.String
+                public var name: Swift.String?
                 /// Creates a new `RpPayload`.
                 ///
                 /// - Parameters:
-                ///   - id: Relying Party ID (usually the domain)
-                ///   - name: Human-readable Relying Party name
+                ///   - id:
+                ///   - name:
                 public init(
-                    id: Swift.String,
-                    name: Swift.String
+                    id: Swift.String? = nil,
+                    name: Swift.String? = nil
                 ) {
                     self.id = id
                     self.name = name
@@ -1910,85 +2111,13 @@ public enum Components {
                 }
             }
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/rp`.
-            public var rp: Components.Schemas.CredentialCreationOptions.RpPayload
+            public var rp: Components.Schemas.CredentialCreationOptions.RpPayload?
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/user`.
-            public struct UserPayload: Codable, Hashable, Sendable {
-                /// User handle (opaque byte sequence, base64url encoded string or raw bytes)
-                ///
-                /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/user/id`.
-                @frozen public enum IdPayload: Codable, Hashable, Sendable {
-                    /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/user/id/case1`.
-                    case case1(Swift.String)
-                    /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/user/id/case2`.
-                    case case2(Swift.String)
-                    public init(from decoder: any Decoder) throws {
-                        var errors: [any Error] = []
-                        do {
-                            self = .case1(try decoder.decodeFromSingleValueContainer())
-                            return
-                        } catch {
-                            errors.append(error)
-                        }
-                        do {
-                            self = .case2(try decoder.decodeFromSingleValueContainer())
-                            return
-                        } catch {
-                            errors.append(error)
-                        }
-                        throw Swift.DecodingError.failedToDecodeOneOfSchema(
-                            type: Self.self,
-                            codingPath: decoder.codingPath,
-                            errors: errors
-                        )
-                    }
-                    public func encode(to encoder: any Encoder) throws {
-                        switch self {
-                        case let .case1(value):
-                            try encoder.encodeToSingleValueContainer(value)
-                        case let .case2(value):
-                            try encoder.encodeToSingleValueContainer(value)
-                        }
-                    }
-                }
-                /// User handle (opaque byte sequence, base64url encoded string or raw bytes)
-                ///
-                /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/user/id`.
-                public var id: Components.Schemas.CredentialCreationOptions.UserPayload.IdPayload
-                /// User account identifier (e.g., username or email)
-                ///
-                /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/user/name`.
-                public var name: Swift.String
-                /// Human-readable user display name
-                ///
-                /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/user/displayName`.
-                public var displayName: Swift.String
-                /// Creates a new `UserPayload`.
-                ///
-                /// - Parameters:
-                ///   - id: User handle (opaque byte sequence, base64url encoded string or raw bytes)
-                ///   - name: User account identifier (e.g., username or email)
-                ///   - displayName: Human-readable user display name
-                public init(
-                    id: Components.Schemas.CredentialCreationOptions.UserPayload.IdPayload,
-                    name: Swift.String,
-                    displayName: Swift.String
-                ) {
-                    self.id = id
-                    self.name = name
-                    self.displayName = displayName
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case id
-                    case name
-                    case displayName
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/user`.
-            public var user: Components.Schemas.CredentialCreationOptions.UserPayload
+            public var user: Components.Schemas.UserSchema?
             /// A challenge to be signed by the authenticator
             ///
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/challenge`.
-            public var challenge: Swift.String
+            public var challenge: OpenAPIRuntime.Base64EncodedData?
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/PubKeyCredParamsPayload`.
             public struct PubKeyCredParamsPayloadPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/PubKeyCredParamsPayload/type`.
@@ -1996,19 +2125,17 @@ public enum Components {
                     case publicKey = "public-key"
                 }
                 /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/PubKeyCredParamsPayload/type`.
-                public var _type: Components.Schemas.CredentialCreationOptions.PubKeyCredParamsPayloadPayload._TypePayload
-                /// COSE algorithm identifier (e.g., -7 for ES256, -257 for RS256)
-                ///
+                public var _type: Components.Schemas.CredentialCreationOptions.PubKeyCredParamsPayloadPayload._TypePayload?
                 /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/PubKeyCredParamsPayload/alg`.
-                public var alg: Swift.Int
+                public var alg: Swift.Int?
                 /// Creates a new `PubKeyCredParamsPayloadPayload`.
                 ///
                 /// - Parameters:
                 ///   - _type:
-                ///   - alg: COSE algorithm identifier (e.g., -7 for ES256, -257 for RS256)
+                ///   - alg:
                 public init(
-                    _type: Components.Schemas.CredentialCreationOptions.PubKeyCredParamsPayloadPayload._TypePayload,
-                    alg: Swift.Int
+                    _type: Components.Schemas.CredentialCreationOptions.PubKeyCredParamsPayloadPayload._TypePayload? = nil,
+                    alg: Swift.Int? = nil
                 ) {
                     self._type = _type
                     self.alg = alg
@@ -2018,151 +2145,90 @@ public enum Components {
                     case alg
                 }
             }
-            /// List of supported public key algorithms
-            ///
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/pubKeyCredParams`.
             public typealias PubKeyCredParamsPayload = [Components.Schemas.CredentialCreationOptions.PubKeyCredParamsPayloadPayload]
-            /// List of supported public key algorithms
-            ///
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/pubKeyCredParams`.
-            public var pubKeyCredParams: Components.Schemas.CredentialCreationOptions.PubKeyCredParamsPayload
+            public var pubKeyCredParams: Components.Schemas.CredentialCreationOptions.PubKeyCredParamsPayload?
             /// Time (in milliseconds) that the caller is willing to wait for the call to complete
             ///
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/timeout`.
             public var timeout: Swift.Int?
-            /// List of credentials to exclude (prevent re-registration)
-            ///
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/excludeCredentials`.
             public var excludeCredentials: [Components.Schemas.PublicKeyCredentialDescriptor]?
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/authenticatorSelection`.
             public struct AuthenticatorSelectionPayload: Codable, Hashable, Sendable {
-                /// Preferred authenticator type
-                ///
                 /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/authenticatorSelection/authenticatorAttachment`.
                 @frozen public enum AuthenticatorAttachmentPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case platform = "platform"
                     case crossPlatform = "cross-platform"
                 }
-                /// Preferred authenticator type
-                ///
                 /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/authenticatorSelection/authenticatorAttachment`.
                 public var authenticatorAttachment: Components.Schemas.CredentialCreationOptions.AuthenticatorSelectionPayload.AuthenticatorAttachmentPayload?
-                /// Whether to require a resident key (deprecated, use residentKey)
-                ///
                 /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/authenticatorSelection/requireResidentKey`.
                 public var requireResidentKey: Swift.Bool?
-                /// Resident key requirement
-                ///
-                /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/authenticatorSelection/residentKey`.
-                @frozen public enum ResidentKeyPayload: String, Codable, Hashable, Sendable, CaseIterable {
-                    case required = "required"
-                    case preferred = "preferred"
-                    case discouraged = "discouraged"
-                }
-                /// Resident key requirement
-                ///
-                /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/authenticatorSelection/residentKey`.
-                public var residentKey: Components.Schemas.CredentialCreationOptions.AuthenticatorSelectionPayload.ResidentKeyPayload?
-                /// User verification requirement
-                ///
                 /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/authenticatorSelection/userVerification`.
                 @frozen public enum UserVerificationPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case required = "required"
                     case preferred = "preferred"
                     case discouraged = "discouraged"
                 }
-                /// User verification requirement
-                ///
                 /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/authenticatorSelection/userVerification`.
                 public var userVerification: Components.Schemas.CredentialCreationOptions.AuthenticatorSelectionPayload.UserVerificationPayload?
                 /// Creates a new `AuthenticatorSelectionPayload`.
                 ///
                 /// - Parameters:
-                ///   - authenticatorAttachment: Preferred authenticator type
-                ///   - requireResidentKey: Whether to require a resident key (deprecated, use residentKey)
-                ///   - residentKey: Resident key requirement
-                ///   - userVerification: User verification requirement
+                ///   - authenticatorAttachment:
+                ///   - requireResidentKey:
+                ///   - userVerification:
                 public init(
                     authenticatorAttachment: Components.Schemas.CredentialCreationOptions.AuthenticatorSelectionPayload.AuthenticatorAttachmentPayload? = nil,
                     requireResidentKey: Swift.Bool? = nil,
-                    residentKey: Components.Schemas.CredentialCreationOptions.AuthenticatorSelectionPayload.ResidentKeyPayload? = nil,
                     userVerification: Components.Schemas.CredentialCreationOptions.AuthenticatorSelectionPayload.UserVerificationPayload? = nil
                 ) {
                     self.authenticatorAttachment = authenticatorAttachment
                     self.requireResidentKey = requireResidentKey
-                    self.residentKey = residentKey
                     self.userVerification = userVerification
                 }
                 public enum CodingKeys: String, CodingKey {
                     case authenticatorAttachment
                     case requireResidentKey
-                    case residentKey
                     case userVerification
                 }
             }
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/authenticatorSelection`.
             public var authenticatorSelection: Components.Schemas.CredentialCreationOptions.AuthenticatorSelectionPayload?
-            /// Attestation conveyance preference
+            /// Preferred attestation conveyance
             ///
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/attestation`.
             @frozen public enum AttestationPayload: String, Codable, Hashable, Sendable, CaseIterable {
                 case none = "none"
                 case indirect = "indirect"
                 case direct = "direct"
-                case enterprise = "enterprise"
             }
-            /// Attestation conveyance preference
+            /// Preferred attestation conveyance
             ///
             /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/attestation`.
             public var attestation: Components.Schemas.CredentialCreationOptions.AttestationPayload?
-            /// Preferred attestation statement formats
-            ///
-            /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/attestationFormats`.
-            public var attestationFormats: [Swift.String]?
-            /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/HintsPayload`.
-            @frozen public enum HintsPayloadPayload: String, Codable, Hashable, Sendable, CaseIterable {
-                case securityKey = "security-key"
-                case clientDevice = "client-device"
-                case hybrid = "hybrid"
-            }
-            /// Hints for the browser about what types of authenticators to show
-            ///
-            /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/hints`.
-            public typealias HintsPayload = [Components.Schemas.CredentialCreationOptions.HintsPayloadPayload]
-            /// Hints for the browser about what types of authenticators to show
-            ///
-            /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/hints`.
-            public var hints: Components.Schemas.CredentialCreationOptions.HintsPayload?
-            /// WebAuthn extensions to enable
-            ///
-            /// - Remark: Generated from `#/components/schemas/CredentialCreationOptions/extensions`.
-            public var extensions: OpenAPIRuntime.OpenAPIObjectContainer?
             /// Creates a new `CredentialCreationOptions`.
             ///
             /// - Parameters:
             ///   - rp:
             ///   - user:
             ///   - challenge: A challenge to be signed by the authenticator
-            ///   - pubKeyCredParams: List of supported public key algorithms
+            ///   - pubKeyCredParams:
             ///   - timeout: Time (in milliseconds) that the caller is willing to wait for the call to complete
-            ///   - excludeCredentials: List of credentials to exclude (prevent re-registration)
+            ///   - excludeCredentials:
             ///   - authenticatorSelection:
-            ///   - attestation: Attestation conveyance preference
-            ///   - attestationFormats: Preferred attestation statement formats
-            ///   - hints: Hints for the browser about what types of authenticators to show
-            ///   - extensions: WebAuthn extensions to enable
+            ///   - attestation: Preferred attestation conveyance
             public init(
-                rp: Components.Schemas.CredentialCreationOptions.RpPayload,
-                user: Components.Schemas.CredentialCreationOptions.UserPayload,
-                challenge: Swift.String,
-                pubKeyCredParams: Components.Schemas.CredentialCreationOptions.PubKeyCredParamsPayload,
+                rp: Components.Schemas.CredentialCreationOptions.RpPayload? = nil,
+                user: Components.Schemas.UserSchema? = nil,
+                challenge: OpenAPIRuntime.Base64EncodedData? = nil,
+                pubKeyCredParams: Components.Schemas.CredentialCreationOptions.PubKeyCredParamsPayload? = nil,
                 timeout: Swift.Int? = nil,
                 excludeCredentials: [Components.Schemas.PublicKeyCredentialDescriptor]? = nil,
                 authenticatorSelection: Components.Schemas.CredentialCreationOptions.AuthenticatorSelectionPayload? = nil,
-                attestation: Components.Schemas.CredentialCreationOptions.AttestationPayload? = nil,
-                attestationFormats: [Swift.String]? = nil,
-                hints: Components.Schemas.CredentialCreationOptions.HintsPayload? = nil,
-                extensions: OpenAPIRuntime.OpenAPIObjectContainer? = nil
+                attestation: Components.Schemas.CredentialCreationOptions.AttestationPayload? = nil
             ) {
                 self.rp = rp
                 self.user = user
@@ -2172,9 +2238,6 @@ public enum Components {
                 self.excludeCredentials = excludeCredentials
                 self.authenticatorSelection = authenticatorSelection
                 self.attestation = attestation
-                self.attestationFormats = attestationFormats
-                self.hints = hints
-                self.extensions = extensions
             }
             public enum CodingKeys: String, CodingKey {
                 case rp
@@ -2185,52 +2248,40 @@ public enum Components {
                 case excludeCredentials
                 case authenticatorSelection
                 case attestation
-                case attestationFormats
-                case hints
-                case extensions
             }
         }
         /// - Remark: Generated from `#/components/schemas/PublicKeyCredentialDescriptor`.
         public struct PublicKeyCredentialDescriptor: Codable, Hashable, Sendable {
-            /// Credential type
-            ///
             /// - Remark: Generated from `#/components/schemas/PublicKeyCredentialDescriptor/type`.
             @frozen public enum _TypePayload: String, Codable, Hashable, Sendable, CaseIterable {
                 case publicKey = "public-key"
             }
-            /// Credential type
-            ///
             /// - Remark: Generated from `#/components/schemas/PublicKeyCredentialDescriptor/type`.
-            public var _type: Components.Schemas.PublicKeyCredentialDescriptor._TypePayload
+            public var _type: Components.Schemas.PublicKeyCredentialDescriptor._TypePayload?
             /// Credential ID
             ///
             /// - Remark: Generated from `#/components/schemas/PublicKeyCredentialDescriptor/id`.
-            public var id: Swift.String
+            public var id: OpenAPIRuntime.Base64EncodedData?
             /// - Remark: Generated from `#/components/schemas/PublicKeyCredentialDescriptor/TransportsPayload`.
             @frozen public enum TransportsPayloadPayload: String, Codable, Hashable, Sendable, CaseIterable {
                 case usb = "usb"
                 case nfc = "nfc"
                 case ble = "ble"
                 case _internal = "internal"
-                case hybrid = "hybrid"
             }
-            /// Supported transports for this credential
-            ///
             /// - Remark: Generated from `#/components/schemas/PublicKeyCredentialDescriptor/transports`.
             public typealias TransportsPayload = [Components.Schemas.PublicKeyCredentialDescriptor.TransportsPayloadPayload]
-            /// Supported transports for this credential
-            ///
             /// - Remark: Generated from `#/components/schemas/PublicKeyCredentialDescriptor/transports`.
             public var transports: Components.Schemas.PublicKeyCredentialDescriptor.TransportsPayload?
             /// Creates a new `PublicKeyCredentialDescriptor`.
             ///
             /// - Parameters:
-            ///   - _type: Credential type
+            ///   - _type:
             ///   - id: Credential ID
-            ///   - transports: Supported transports for this credential
+            ///   - transports:
             public init(
-                _type: Components.Schemas.PublicKeyCredentialDescriptor._TypePayload,
-                id: Swift.String,
+                _type: Components.Schemas.PublicKeyCredentialDescriptor._TypePayload? = nil,
+                id: OpenAPIRuntime.Base64EncodedData? = nil,
                 transports: Components.Schemas.PublicKeyCredentialDescriptor.TransportsPayload? = nil
             ) {
                 self._type = _type
@@ -2297,10 +2348,6 @@ public enum Components {
             ///
             /// - Remark: Generated from `#/components/schemas/OAuthClientSchema/client_uri`.
             public var clientUri: Swift.String?
-            /// URL of the client application's logo
-            ///
-            /// - Remark: Generated from `#/components/schemas/OAuthClientSchema/logo_uri`.
-            public var logoUri: Swift.String?
             /// Array of redirect URIs used by the client
             ///
             /// - Remark: Generated from `#/components/schemas/OAuthClientSchema/redirect_uris`.
@@ -2348,7 +2395,6 @@ public enum Components {
             ///   - tokenEndpointAuthMethod: Authentication method for the token endpoint
             ///   - registrationType: Registration type of the client
             ///   - clientUri: URL of the client application's homepage
-            ///   - logoUri: URL of the client application's logo
             ///   - redirectUris: Array of redirect URIs used by the client
             ///   - grantTypes: OAuth grant types the client is authorized to use
             ///   - responseTypes: OAuth response types the client can use
@@ -2363,7 +2409,6 @@ public enum Components {
                 tokenEndpointAuthMethod: Components.Schemas.OAuthClientSchema.TokenEndpointAuthMethodPayload? = nil,
                 registrationType: Components.Schemas.OAuthClientSchema.RegistrationTypePayload? = nil,
                 clientUri: Swift.String? = nil,
-                logoUri: Swift.String? = nil,
                 redirectUris: [Swift.String]? = nil,
                 grantTypes: Components.Schemas.OAuthClientSchema.GrantTypesPayload? = nil,
                 responseTypes: Components.Schemas.OAuthClientSchema.ResponseTypesPayload? = nil,
@@ -2378,7 +2423,6 @@ public enum Components {
                 self.tokenEndpointAuthMethod = tokenEndpointAuthMethod
                 self.registrationType = registrationType
                 self.clientUri = clientUri
-                self.logoUri = logoUri
                 self.redirectUris = redirectUris
                 self.grantTypes = grantTypes
                 self.responseTypes = responseTypes
@@ -2394,7 +2438,6 @@ public enum Components {
                 case tokenEndpointAuthMethod = "token_endpoint_auth_method"
                 case registrationType = "registration_type"
                 case clientUri = "client_uri"
-                case logoUri = "logo_uri"
                 case redirectUris = "redirect_uris"
                 case grantTypes = "grant_types"
                 case responseTypes = "response_types"
@@ -6214,50 +6257,15 @@ public enum Operations {
                     }
                     /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/json/channel`.
                     public var channel: Operations.PostFactorsFactorIdChallenge.Input.Body.JsonPayload.ChannelPayload?
-                    /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/json/webauthn`.
-                    public struct WebauthnPayload: Codable, Hashable, Sendable {
-                        /// The relying party identifier (usually the domain)
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/json/webauthn/rpId`.
-                        public var rpId: Swift.String
-                        /// List of allowed origins for WebAuthn
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/json/webauthn/rpOrigins`.
-                        public var rpOrigins: [Swift.String]
-                        /// Creates a new `WebauthnPayload`.
-                        ///
-                        /// - Parameters:
-                        ///   - rpId: The relying party identifier (usually the domain)
-                        ///   - rpOrigins: List of allowed origins for WebAuthn
-                        public init(
-                            rpId: Swift.String,
-                            rpOrigins: [Swift.String]
-                        ) {
-                            self.rpId = rpId
-                            self.rpOrigins = rpOrigins
-                        }
-                        public enum CodingKeys: String, CodingKey {
-                            case rpId
-                            case rpOrigins
-                        }
-                    }
-                    /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/json/webauthn`.
-                    public var webauthn: Operations.PostFactorsFactorIdChallenge.Input.Body.JsonPayload.WebauthnPayload?
                     /// Creates a new `JsonPayload`.
                     ///
                     /// - Parameters:
                     ///   - channel:
-                    ///   - webauthn:
-                    public init(
-                        channel: Operations.PostFactorsFactorIdChallenge.Input.Body.JsonPayload.ChannelPayload? = nil,
-                        webauthn: Operations.PostFactorsFactorIdChallenge.Input.Body.JsonPayload.WebauthnPayload? = nil
-                    ) {
+                    public init(channel: Operations.PostFactorsFactorIdChallenge.Input.Body.JsonPayload.ChannelPayload? = nil) {
                         self.channel = channel
-                        self.webauthn = webauthn
                     }
                     public enum CodingKeys: String, CodingKey {
                         case channel
-                        case webauthn
                     }
                 }
                 /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/content/application\/json`.
@@ -6487,77 +6495,21 @@ public enum Operations {
                     public var challengeId: Swift.String
                     /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/code`.
                     public var code: Swift.String?
-                    /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn`.
-                    public struct WebauthnPayload: Codable, Hashable, Sendable {
-                        /// The relying party identifier
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn/rpId`.
-                        public var rpId: Swift.String
-                        /// List of allowed origins for WebAuthn
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn/rpOrigins`.
-                        public var rpOrigins: [Swift.String]
-                        /// Type of WebAuthn operation
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn/type`.
-                        @frozen public enum _TypePayload: String, Codable, Hashable, Sendable, CaseIterable {
-                            case create = "create"
-                            case request = "request"
-                        }
-                        /// Type of WebAuthn operation
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn/type`.
-                        public var _type: Operations.PostFactorsFactorIdVerify.Input.Body.JsonPayload.WebauthnPayload._TypePayload
-                        /// WebAuthn credential response from the client
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn/credential_response`.
-                        public var credentialResponse: OpenAPIRuntime.OpenAPIObjectContainer
-                        /// Creates a new `WebauthnPayload`.
-                        ///
-                        /// - Parameters:
-                        ///   - rpId: The relying party identifier
-                        ///   - rpOrigins: List of allowed origins for WebAuthn
-                        ///   - _type: Type of WebAuthn operation
-                        ///   - credentialResponse: WebAuthn credential response from the client
-                        public init(
-                            rpId: Swift.String,
-                            rpOrigins: [Swift.String],
-                            _type: Operations.PostFactorsFactorIdVerify.Input.Body.JsonPayload.WebauthnPayload._TypePayload,
-                            credentialResponse: OpenAPIRuntime.OpenAPIObjectContainer
-                        ) {
-                            self.rpId = rpId
-                            self.rpOrigins = rpOrigins
-                            self._type = _type
-                            self.credentialResponse = credentialResponse
-                        }
-                        public enum CodingKeys: String, CodingKey {
-                            case rpId
-                            case rpOrigins
-                            case _type = "type"
-                            case credentialResponse = "credential_response"
-                        }
-                    }
-                    /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn`.
-                    public var webauthn: Operations.PostFactorsFactorIdVerify.Input.Body.JsonPayload.WebauthnPayload?
                     /// Creates a new `JsonPayload`.
                     ///
                     /// - Parameters:
                     ///   - challengeId:
                     ///   - code:
-                    ///   - webauthn:
                     public init(
                         challengeId: Swift.String,
-                        code: Swift.String? = nil,
-                        webauthn: Operations.PostFactorsFactorIdVerify.Input.Body.JsonPayload.WebauthnPayload? = nil
+                        code: Swift.String? = nil
                     ) {
                         self.challengeId = challengeId
                         self.code = code
-                        self.webauthn = webauthn
                     }
                     public enum CodingKeys: String, CodingKey {
                         case challengeId = "challenge_id"
                         case code
-                        case webauthn
                     }
                 }
                 /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/content/application\/json`.
@@ -11527,107 +11479,51 @@ public enum Operations {
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json`.
                 public struct JsonPayload: Codable, Hashable, Sendable {
-                    /// Human-readable name of the client application
-                    ///
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/client_name`.
                     public var clientName: Swift.String
-                    /// URL of the client application's homepage
-                    ///
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/client_uri`.
                     public var clientUri: Swift.String?
-                    /// URL of the client application's logo
-                    ///
-                    /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/logo_uri`.
-                    public var logoUri: Swift.String?
-                    /// Array of redirect URIs used by the client (maximum 10)
-                    ///
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/redirect_uris`.
                     public var redirectUris: [Swift.String]
-                    /// Type of the client. Optional. If not provided, will be inferred from token_endpoint_auth_method or defaults to 'confidential'. Public clients are used for applications that cannot securely store credentials (e.g., SPAs, mobile apps). Confidential clients can securely store credentials (e.g., server-side applications).
-                    ///
-                    ///
-                    /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/client_type`.
-                    @frozen public enum ClientTypePayload: String, Codable, Hashable, Sendable, CaseIterable {
-                        case _public = "public"
-                        case confidential = "confidential"
-                    }
-                    /// Type of the client. Optional. If not provided, will be inferred from token_endpoint_auth_method or defaults to 'confidential'. Public clients are used for applications that cannot securely store credentials (e.g., SPAs, mobile apps). Confidential clients can securely store credentials (e.g., server-side applications).
-                    ///
-                    ///
-                    /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/client_type`.
-                    public var clientType: Operations.PostAdminOauthClients.Input.Body.JsonPayload.ClientTypePayload?
-                    /// Authentication method for the token endpoint. Optional. 'none' is for public clients, 'client_secret_basic' and 'client_secret_post' are for confidential clients. If provided, must be consistent with client_type. If not provided, will be inferred from client_type.
-                    ///
-                    ///
-                    /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/token_endpoint_auth_method`.
-                    @frozen public enum TokenEndpointAuthMethodPayload: String, Codable, Hashable, Sendable, CaseIterable {
-                        case none = "none"
-                        case clientSecretBasic = "client_secret_basic"
-                        case clientSecretPost = "client_secret_post"
-                    }
-                    /// Authentication method for the token endpoint. Optional. 'none' is for public clients, 'client_secret_basic' and 'client_secret_post' are for confidential clients. If provided, must be consistent with client_type. If not provided, will be inferred from client_type.
-                    ///
-                    ///
-                    /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/token_endpoint_auth_method`.
-                    public var tokenEndpointAuthMethod: Operations.PostAdminOauthClients.Input.Body.JsonPayload.TokenEndpointAuthMethodPayload?
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/GrantTypesPayload`.
                     @frozen public enum GrantTypesPayloadPayload: String, Codable, Hashable, Sendable, CaseIterable {
                         case authorizationCode = "authorization_code"
                         case refreshToken = "refresh_token"
                     }
-                    /// OAuth grant types the client will use (defaults to both if not specified)
-                    ///
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/grant_types`.
                     public typealias GrantTypesPayload = [Operations.PostAdminOauthClients.Input.Body.JsonPayload.GrantTypesPayloadPayload]
-                    /// OAuth grant types the client will use (defaults to both if not specified)
-                    ///
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/grant_types`.
                     public var grantTypes: Operations.PostAdminOauthClients.Input.Body.JsonPayload.GrantTypesPayload?
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/ResponseTypesPayload`.
                     @frozen public enum ResponseTypesPayloadPayload: String, Codable, Hashable, Sendable, CaseIterable {
                         case code = "code"
                     }
-                    /// OAuth response types the client can use
-                    ///
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/response_types`.
                     public typealias ResponseTypesPayload = [Operations.PostAdminOauthClients.Input.Body.JsonPayload.ResponseTypesPayloadPayload]
-                    /// OAuth response types the client can use
-                    ///
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/response_types`.
                     public var responseTypes: Operations.PostAdminOauthClients.Input.Body.JsonPayload.ResponseTypesPayload?
-                    /// Space-separated list of scope values
-                    ///
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/POST/requestBody/json/scope`.
                     public var scope: Swift.String?
                     /// Creates a new `JsonPayload`.
                     ///
                     /// - Parameters:
-                    ///   - clientName: Human-readable name of the client application
-                    ///   - clientUri: URL of the client application's homepage
-                    ///   - logoUri: URL of the client application's logo
-                    ///   - redirectUris: Array of redirect URIs used by the client (maximum 10)
-                    ///   - clientType: Type of the client. Optional. If not provided, will be inferred from token_endpoint_auth_method or defaults to 'confidential'. Public clients are used for applications that cannot securely store credentials (e.g., SPAs, mobile apps). Confidential clients can securely store credentials (e.g., server-side applications).
-                    ///   - tokenEndpointAuthMethod: Authentication method for the token endpoint. Optional. 'none' is for public clients, 'client_secret_basic' and 'client_secret_post' are for confidential clients. If provided, must be consistent with client_type. If not provided, will be inferred from client_type.
-                    ///   - grantTypes: OAuth grant types the client will use (defaults to both if not specified)
-                    ///   - responseTypes: OAuth response types the client can use
-                    ///   - scope: Space-separated list of scope values
+                    ///   - clientName:
+                    ///   - clientUri:
+                    ///   - redirectUris:
+                    ///   - grantTypes:
+                    ///   - responseTypes:
+                    ///   - scope:
                     public init(
                         clientName: Swift.String,
                         clientUri: Swift.String? = nil,
-                        logoUri: Swift.String? = nil,
                         redirectUris: [Swift.String],
-                        clientType: Operations.PostAdminOauthClients.Input.Body.JsonPayload.ClientTypePayload? = nil,
-                        tokenEndpointAuthMethod: Operations.PostAdminOauthClients.Input.Body.JsonPayload.TokenEndpointAuthMethodPayload? = nil,
                         grantTypes: Operations.PostAdminOauthClients.Input.Body.JsonPayload.GrantTypesPayload? = nil,
                         responseTypes: Operations.PostAdminOauthClients.Input.Body.JsonPayload.ResponseTypesPayload? = nil,
                         scope: Swift.String? = nil
                     ) {
                         self.clientName = clientName
                         self.clientUri = clientUri
-                        self.logoUri = logoUri
                         self.redirectUris = redirectUris
-                        self.clientType = clientType
-                        self.tokenEndpointAuthMethod = tokenEndpointAuthMethod
                         self.grantTypes = grantTypes
                         self.responseTypes = responseTypes
                         self.scope = scope
@@ -11635,10 +11531,7 @@ public enum Operations {
                     public enum CodingKeys: String, CodingKey {
                         case clientName = "client_name"
                         case clientUri = "client_uri"
-                        case logoUri = "logo_uri"
                         case redirectUris = "redirect_uris"
-                        case clientType = "client_type"
-                        case tokenEndpointAuthMethod = "token_endpoint_auth_method"
                         case grantTypes = "grant_types"
                         case responseTypes = "response_types"
                         case scope
@@ -12575,51 +12468,20 @@ public enum Operations {
                     ///
                     /// - Remark: Generated from `#/paths/oauth/clients/register/POST/requestBody/json/client_uri`.
                     public var clientUri: Swift.String?
-                    /// URL of the client application's logo
-                    ///
-                    /// - Remark: Generated from `#/paths/oauth/clients/register/POST/requestBody/json/logo_uri`.
-                    public var logoUri: Swift.String?
-                    /// Array of redirect URIs used by the client (maximum 10)
+                    /// Array of redirect URIs used by the client
                     ///
                     /// - Remark: Generated from `#/paths/oauth/clients/register/POST/requestBody/json/redirect_uris`.
                     public var redirectUris: [Swift.String]
-                    /// Type of the client. Optional. If not provided, will be inferred from token_endpoint_auth_method or defaults to 'confidential'. Public clients are used for applications that cannot securely store credentials (e.g., SPAs, mobile apps). Confidential clients can securely store credentials (e.g., server-side applications).
-                    ///
-                    ///
-                    /// - Remark: Generated from `#/paths/oauth/clients/register/POST/requestBody/json/client_type`.
-                    @frozen public enum ClientTypePayload: String, Codable, Hashable, Sendable, CaseIterable {
-                        case _public = "public"
-                        case confidential = "confidential"
-                    }
-                    /// Type of the client. Optional. If not provided, will be inferred from token_endpoint_auth_method or defaults to 'confidential'. Public clients are used for applications that cannot securely store credentials (e.g., SPAs, mobile apps). Confidential clients can securely store credentials (e.g., server-side applications).
-                    ///
-                    ///
-                    /// - Remark: Generated from `#/paths/oauth/clients/register/POST/requestBody/json/client_type`.
-                    public var clientType: Operations.PostOauthClientsRegister.Input.Body.JsonPayload.ClientTypePayload?
-                    /// Authentication method for the token endpoint. Optional. 'none' is for public clients, 'client_secret_basic' and 'client_secret_post' are for confidential clients. If provided, must be consistent with client_type. If not provided, will be inferred from client_type.
-                    ///
-                    ///
-                    /// - Remark: Generated from `#/paths/oauth/clients/register/POST/requestBody/json/token_endpoint_auth_method`.
-                    @frozen public enum TokenEndpointAuthMethodPayload: String, Codable, Hashable, Sendable, CaseIterable {
-                        case none = "none"
-                        case clientSecretBasic = "client_secret_basic"
-                        case clientSecretPost = "client_secret_post"
-                    }
-                    /// Authentication method for the token endpoint. Optional. 'none' is for public clients, 'client_secret_basic' and 'client_secret_post' are for confidential clients. If provided, must be consistent with client_type. If not provided, will be inferred from client_type.
-                    ///
-                    ///
-                    /// - Remark: Generated from `#/paths/oauth/clients/register/POST/requestBody/json/token_endpoint_auth_method`.
-                    public var tokenEndpointAuthMethod: Operations.PostOauthClientsRegister.Input.Body.JsonPayload.TokenEndpointAuthMethodPayload?
                     /// - Remark: Generated from `#/paths/oauth/clients/register/POST/requestBody/json/GrantTypesPayload`.
                     @frozen public enum GrantTypesPayloadPayload: String, Codable, Hashable, Sendable, CaseIterable {
                         case authorizationCode = "authorization_code"
                         case refreshToken = "refresh_token"
                     }
-                    /// OAuth grant types the client will use (defaults to both if not specified)
+                    /// OAuth grant types the client will use
                     ///
                     /// - Remark: Generated from `#/paths/oauth/clients/register/POST/requestBody/json/grant_types`.
                     public typealias GrantTypesPayload = [Operations.PostOauthClientsRegister.Input.Body.JsonPayload.GrantTypesPayloadPayload]
-                    /// OAuth grant types the client will use (defaults to both if not specified)
+                    /// OAuth grant types the client will use
                     ///
                     /// - Remark: Generated from `#/paths/oauth/clients/register/POST/requestBody/json/grant_types`.
                     public var grantTypes: Operations.PostOauthClientsRegister.Input.Body.JsonPayload.GrantTypesPayload?
@@ -12644,30 +12506,21 @@ public enum Operations {
                     /// - Parameters:
                     ///   - clientName: Human-readable name of the client application
                     ///   - clientUri: URL of the client application's homepage
-                    ///   - logoUri: URL of the client application's logo
-                    ///   - redirectUris: Array of redirect URIs used by the client (maximum 10)
-                    ///   - clientType: Type of the client. Optional. If not provided, will be inferred from token_endpoint_auth_method or defaults to 'confidential'. Public clients are used for applications that cannot securely store credentials (e.g., SPAs, mobile apps). Confidential clients can securely store credentials (e.g., server-side applications).
-                    ///   - tokenEndpointAuthMethod: Authentication method for the token endpoint. Optional. 'none' is for public clients, 'client_secret_basic' and 'client_secret_post' are for confidential clients. If provided, must be consistent with client_type. If not provided, will be inferred from client_type.
-                    ///   - grantTypes: OAuth grant types the client will use (defaults to both if not specified)
+                    ///   - redirectUris: Array of redirect URIs used by the client
+                    ///   - grantTypes: OAuth grant types the client will use
                     ///   - responseTypes: OAuth response types the client will use
                     ///   - scope: Space-separated list of scope values
                     public init(
                         clientName: Swift.String,
                         clientUri: Swift.String? = nil,
-                        logoUri: Swift.String? = nil,
                         redirectUris: [Swift.String],
-                        clientType: Operations.PostOauthClientsRegister.Input.Body.JsonPayload.ClientTypePayload? = nil,
-                        tokenEndpointAuthMethod: Operations.PostOauthClientsRegister.Input.Body.JsonPayload.TokenEndpointAuthMethodPayload? = nil,
                         grantTypes: Operations.PostOauthClientsRegister.Input.Body.JsonPayload.GrantTypesPayload? = nil,
                         responseTypes: Operations.PostOauthClientsRegister.Input.Body.JsonPayload.ResponseTypesPayload? = nil,
                         scope: Swift.String? = nil
                     ) {
                         self.clientName = clientName
                         self.clientUri = clientUri
-                        self.logoUri = logoUri
                         self.redirectUris = redirectUris
-                        self.clientType = clientType
-                        self.tokenEndpointAuthMethod = tokenEndpointAuthMethod
                         self.grantTypes = grantTypes
                         self.responseTypes = responseTypes
                         self.scope = scope
@@ -12675,10 +12528,7 @@ public enum Operations {
                     public enum CodingKeys: String, CodingKey {
                         case clientName = "client_name"
                         case clientUri = "client_uri"
-                        case logoUri = "logo_uri"
                         case redirectUris = "redirect_uris"
-                        case clientType = "client_type"
-                        case tokenEndpointAuthMethod = "token_endpoint_auth_method"
                         case grantTypes = "grant_types"
                         case responseTypes = "response_types"
                         case scope
