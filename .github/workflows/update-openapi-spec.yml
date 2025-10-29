@@ -1,0 +1,95 @@
+name: Update OpenAPI Spec
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: "0 2 * * *"
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  update-spec:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "6.0"
+
+      - name: Pull latest OpenAPI spec and generate client
+        run: |
+          make pull-spec
+          make generate
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configure Git
+        if: steps.changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Create branch and commit changes
+        id: create-branch
+        if: steps.changes.outputs.changes == 'true'
+        run: |
+          BRANCH_NAME="update-openapi-spec-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b "$BRANCH_NAME"
+          git add openapi.yaml Sources/SupabaseAuthHTTP/Generated/
+          git commit -m "Update OpenAPI spec and regenerate client
+
+          - Updated openapi.yaml from Supabase Auth repository
+          - Regenerated Swift client code
+          - Generated on: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push origin "$BRANCH_NAME"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Update OpenAPI spec and regenerate client - ${new Date().toISOString().split('T')[0]}`,
+              head: '${{ steps.create-branch.outputs.branch_name }}',
+              base: 'main',
+              body: `## OpenAPI Spec Update
+
+              This PR automatically updates the OpenAPI specification and regenerates the Swift client code.
+
+              ### Changes
+              - Updated \`openapi.yaml\` from the latest Supabase Auth repository
+              - Regenerated Swift client code using Swift OpenAPI Generator
+              - Generated on: ${new Date().toISOString()}
+
+              ### Verification
+              - [ ] Review the generated client code
+              - [ ] Test the updated API endpoints
+              - [ ] Ensure no breaking changes in the generated types
+
+              ---
+              *This PR was created automatically by the Update OpenAPI Spec workflow.*`,
+              draft: false
+            });
+
+            console.log(`Created PR #${pr.number}: ${pr.html_url}`);
+
+      - name: No changes detected
+        if: steps.changes.outputs.changes == 'false'
+        run: |
+          echo "No changes detected in OpenAPI spec. Skipping PR creation."
