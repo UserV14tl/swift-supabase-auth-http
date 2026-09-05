@@ -304,6 +304,46 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `POST /admin/oauth/clients/{client_id}/regenerate_secret`.
     /// - Remark: Generated from `#/paths//admin/oauth/clients/{client_id}/regenerate_secret/post`.
     func postAdminOauthClientsClientIdRegenerateSecret(_ input: Operations.PostAdminOauthClientsClientIdRegenerateSecret.Input) async throws -> Operations.PostAdminOauthClientsClientIdRegenerateSecret.Output
+    /// List all custom OIDC/OAuth providers
+    ///
+    /// Retrieves a list of all custom OAuth 2.0 and OIDC provider configurations. Optionally filter by provider type. Only available when custom OIDC/OAuth providers are enabled (set `GOTRUE_CUSTOM_OAUTH_ENABLED=true` for self-hosted or enable in Supabase Dashboard).
+    ///
+    ///
+    /// - Remark: HTTP `GET /admin/custom-providers`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/get`.
+    func getAdminCustomProviders(_ input: Operations.GetAdminCustomProviders.Input) async throws -> Operations.GetAdminCustomProviders.Output
+    /// Create a new custom OIDC/OAuth provider
+    ///
+    /// Creates a new custom OAuth 2.0 or OIDC provider configuration. Required fields differ based on provider_type. Only available when custom OIDC/OAuth providers are enabled. For OIDC providers, the server fetches and validates the OpenID Connect discovery document from the issuer's well-known endpoint (or the provided discovery_url) at creation time. This ensures the issuer is reachable and correctly configured before the provider is stored.
+    ///
+    ///
+    /// - Remark: HTTP `POST /admin/custom-providers`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/post`.
+    func postAdminCustomProviders(_ input: Operations.PostAdminCustomProviders.Input) async throws -> Operations.PostAdminCustomProviders.Output
+    /// Get custom OIDC/OAuth provider details
+    ///
+    /// Retrieves details of a specific custom OIDC/OAuth provider. Only available when custom OIDC/OAuth providers are enabled.
+    ///
+    ///
+    /// - Remark: HTTP `GET /admin/custom-providers/{identifier}`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/get`.
+    func getAdminCustomProvidersIdentifier(_ input: Operations.GetAdminCustomProvidersIdentifier.Input) async throws -> Operations.GetAdminCustomProvidersIdentifier.Output
+    /// Update custom OIDC/OAuth provider
+    ///
+    /// Updates an existing custom OIDC/OAuth provider. All fields are optional. Only provided fields will be updated. Only available when custom OIDC/OAuth providers are enabled. When `issuer` or `discovery_url` is changed on an OIDC provider, the server re-fetches and validates the discovery document before persisting.
+    ///
+    ///
+    /// - Remark: HTTP `PUT /admin/custom-providers/{identifier}`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/put`.
+    func putAdminCustomProvidersIdentifier(_ input: Operations.PutAdminCustomProvidersIdentifier.Input) async throws -> Operations.PutAdminCustomProvidersIdentifier.Output
+    /// Delete custom OIDC/OAuth provider
+    ///
+    /// Permanently removes a custom OIDC/OAuth provider configuration. Only available when custom OIDC/OAuth providers are enabled.
+    ///
+    ///
+    /// - Remark: HTTP `DELETE /admin/custom-providers/{identifier}`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/delete`.
+    func deleteAdminCustomProvidersIdentifier(_ input: Operations.DeleteAdminCustomProvidersIdentifier.Input) async throws -> Operations.DeleteAdminCustomProvidersIdentifier.Output
     /// Register a new OAuth client dynamically (public endpoint).
     ///
     /// Allows applications to register as OAuth clients with this server dynamically. This follows the OAuth 2.0 Dynamic Client Registration Protocol. Only available when OAuth server is enabled and dynamic registration is allowed (set `GOTRUE_OAUTH_SERVER_ENABLED=true` and `GOTRUE_OAUTH_SERVER_ALLOW_DYNAMIC_REGISTRATION=true` for self-hosted or enable both settings in Supabase Dashboard).
@@ -982,6 +1022,88 @@ extension APIProtocol {
         headers: Operations.PostAdminOauthClientsClientIdRegenerateSecret.Input.Headers = .init()
     ) async throws -> Operations.PostAdminOauthClientsClientIdRegenerateSecret.Output {
         try await postAdminOauthClientsClientIdRegenerateSecret(Operations.PostAdminOauthClientsClientIdRegenerateSecret.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// List all custom OIDC/OAuth providers
+    ///
+    /// Retrieves a list of all custom OAuth 2.0 and OIDC provider configurations. Optionally filter by provider type. Only available when custom OIDC/OAuth providers are enabled (set `GOTRUE_CUSTOM_OAUTH_ENABLED=true` for self-hosted or enable in Supabase Dashboard).
+    ///
+    ///
+    /// - Remark: HTTP `GET /admin/custom-providers`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/get`.
+    public func getAdminCustomProviders(
+        query: Operations.GetAdminCustomProviders.Input.Query = .init(),
+        headers: Operations.GetAdminCustomProviders.Input.Headers = .init()
+    ) async throws -> Operations.GetAdminCustomProviders.Output {
+        try await getAdminCustomProviders(Operations.GetAdminCustomProviders.Input(
+            query: query,
+            headers: headers
+        ))
+    }
+    /// Create a new custom OIDC/OAuth provider
+    ///
+    /// Creates a new custom OAuth 2.0 or OIDC provider configuration. Required fields differ based on provider_type. Only available when custom OIDC/OAuth providers are enabled. For OIDC providers, the server fetches and validates the OpenID Connect discovery document from the issuer's well-known endpoint (or the provided discovery_url) at creation time. This ensures the issuer is reachable and correctly configured before the provider is stored.
+    ///
+    ///
+    /// - Remark: HTTP `POST /admin/custom-providers`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/post`.
+    public func postAdminCustomProviders(
+        headers: Operations.PostAdminCustomProviders.Input.Headers = .init(),
+        body: Operations.PostAdminCustomProviders.Input.Body
+    ) async throws -> Operations.PostAdminCustomProviders.Output {
+        try await postAdminCustomProviders(Operations.PostAdminCustomProviders.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// Get custom OIDC/OAuth provider details
+    ///
+    /// Retrieves details of a specific custom OIDC/OAuth provider. Only available when custom OIDC/OAuth providers are enabled.
+    ///
+    ///
+    /// - Remark: HTTP `GET /admin/custom-providers/{identifier}`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/get`.
+    public func getAdminCustomProvidersIdentifier(
+        path: Operations.GetAdminCustomProvidersIdentifier.Input.Path,
+        headers: Operations.GetAdminCustomProvidersIdentifier.Input.Headers = .init()
+    ) async throws -> Operations.GetAdminCustomProvidersIdentifier.Output {
+        try await getAdminCustomProvidersIdentifier(Operations.GetAdminCustomProvidersIdentifier.Input(
+            path: path,
+            headers: headers
+        ))
+    }
+    /// Update custom OIDC/OAuth provider
+    ///
+    /// Updates an existing custom OIDC/OAuth provider. All fields are optional. Only provided fields will be updated. Only available when custom OIDC/OAuth providers are enabled. When `issuer` or `discovery_url` is changed on an OIDC provider, the server re-fetches and validates the discovery document before persisting.
+    ///
+    ///
+    /// - Remark: HTTP `PUT /admin/custom-providers/{identifier}`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/put`.
+    public func putAdminCustomProvidersIdentifier(
+        path: Operations.PutAdminCustomProvidersIdentifier.Input.Path,
+        headers: Operations.PutAdminCustomProvidersIdentifier.Input.Headers = .init(),
+        body: Operations.PutAdminCustomProvidersIdentifier.Input.Body
+    ) async throws -> Operations.PutAdminCustomProvidersIdentifier.Output {
+        try await putAdminCustomProvidersIdentifier(Operations.PutAdminCustomProvidersIdentifier.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// Delete custom OIDC/OAuth provider
+    ///
+    /// Permanently removes a custom OIDC/OAuth provider configuration. Only available when custom OIDC/OAuth providers are enabled.
+    ///
+    ///
+    /// - Remark: HTTP `DELETE /admin/custom-providers/{identifier}`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/delete`.
+    public func deleteAdminCustomProvidersIdentifier(
+        path: Operations.DeleteAdminCustomProvidersIdentifier.Input.Path,
+        headers: Operations.DeleteAdminCustomProvidersIdentifier.Input.Headers = .init()
+    ) async throws -> Operations.DeleteAdminCustomProvidersIdentifier.Output {
+        try await deleteAdminCustomProvidersIdentifier(Operations.DeleteAdminCustomProvidersIdentifier.Input(
             path: path,
             headers: headers
         ))
@@ -2469,6 +2591,238 @@ public enum Components {
                 case grantTypes = "grant_types"
                 case responseTypes = "response_types"
                 case scope
+                case createdAt = "created_at"
+                case updatedAt = "updated_at"
+            }
+        }
+        /// Represents a custom OAuth 2.0 or OIDC provider configuration
+        ///
+        /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema`.
+        public struct CustomOAuthProviderSchema: Codable, Hashable, Sendable {
+            /// Unique provider identifier
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/id`.
+            public var id: Swift.String
+            /// Type of OAuth provider
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/provider_type`.
+            @frozen public enum ProviderTypePayload: String, Codable, Hashable, Sendable, CaseIterable {
+                case oauth2 = "oauth2"
+                case oidc = "oidc"
+            }
+            /// Type of OAuth provider
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/provider_type`.
+            public var providerType: Components.Schemas.CustomOAuthProviderSchema.ProviderTypePayload
+            /// Unique identifier for the provider (must start with 'custom:' prefix)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/identifier`.
+            public var identifier: Swift.String
+            /// Human-readable name of the provider
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/name`.
+            public var name: Swift.String
+            /// OAuth client ID
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/client_id`.
+            public var clientId: Swift.String
+            /// Additional acceptable client IDs for token validation
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/acceptable_client_ids`.
+            public var acceptableClientIds: [Swift.String]?
+            /// OAuth scopes to request (OIDC providers will automatically include 'openid')
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/scopes`.
+            public var scopes: [Swift.String]?
+            /// Whether PKCE (Proof Key for Code Exchange) is enabled
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/pkce_enabled`.
+            public var pkceEnabled: Swift.Bool?
+            /// Maps provider claims to user attributes
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/attribute_mapping`.
+            public struct AttributeMappingPayload: Codable, Hashable, Sendable {
+                /// A container of undocumented properties.
+                public var additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer
+                /// Creates a new `AttributeMappingPayload`.
+                ///
+                /// - Parameters:
+                ///   - additionalProperties: A container of undocumented properties.
+                public init(additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer = .init()) {
+                    self.additionalProperties = additionalProperties
+                }
+                public init(from decoder: any Decoder) throws {
+                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                }
+                public func encode(to encoder: any Encoder) throws {
+                    try encoder.encodeAdditionalProperties(additionalProperties)
+                }
+            }
+            /// Maps provider claims to user attributes
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/attribute_mapping`.
+            public var attributeMapping: Components.Schemas.CustomOAuthProviderSchema.AttributeMappingPayload?
+            /// Raw IdP claim keys copied verbatim into the user's custom_claims (e.g. groups, org_id). For OIDC providers these are read from the ID token claims (falling back to the userinfo response when no ID token is returned); for OAuth2 providers they are read from the userinfo response. Empty preserves no non-standard claims.
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/custom_claims_allowlist`.
+            public var customClaimsAllowlist: [Swift.String]?
+            /// Additional parameters to include in authorization requests as string key-value pairs (cannot override reserved OAuth parameters)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/authorization_params`.
+            public struct AuthorizationParamsPayload: Codable, Hashable, Sendable {
+                /// A container of undocumented properties.
+                public var additionalProperties: [String: Swift.String]
+                /// Creates a new `AuthorizationParamsPayload`.
+                ///
+                /// - Parameters:
+                ///   - additionalProperties: A container of undocumented properties.
+                public init(additionalProperties: [String: Swift.String] = .init()) {
+                    self.additionalProperties = additionalProperties
+                }
+                public init(from decoder: any Decoder) throws {
+                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                }
+                public func encode(to encoder: any Encoder) throws {
+                    try encoder.encodeAdditionalProperties(additionalProperties)
+                }
+            }
+            /// Additional parameters to include in authorization requests as string key-value pairs (cannot override reserved OAuth parameters)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/authorization_params`.
+            public var authorizationParams: Components.Schemas.CustomOAuthProviderSchema.AuthorizationParamsPayload?
+            /// Whether the provider is enabled
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/enabled`.
+            public var enabled: Swift.Bool?
+            /// Whether email is optional for users from this provider
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/email_optional`.
+            public var emailOptional: Swift.Bool?
+            /// OIDC issuer URL (required for OIDC providers)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/issuer`.
+            public var issuer: Swift.String?
+            /// OIDC discovery URL (optional, defaults to {issuer}/.well-known/openid-configuration)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/discovery_url`.
+            public var discoveryUrl: Swift.String?
+            /// Skip nonce validation for OIDC (not recommended for production)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/skip_nonce_check`.
+            public var skipNonceCheck: Swift.Bool?
+            /// OAuth 2.0 authorization endpoint (required for OAuth2 providers)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/authorization_url`.
+            public var authorizationUrl: Swift.String?
+            /// OAuth 2.0 token endpoint (required for OAuth2 providers)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/token_url`.
+            public var tokenUrl: Swift.String?
+            /// OAuth 2.0 userinfo endpoint (required for OAuth2 providers)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/userinfo_url`.
+            public var userinfoUrl: Swift.String?
+            /// JWKS URI for token validation (optional for OAuth2 providers)
+            ///
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/jwks_uri`.
+            public var jwksUri: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/created_at`.
+            public var createdAt: Foundation.Date?
+            /// - Remark: Generated from `#/components/schemas/CustomOAuthProviderSchema/updated_at`.
+            public var updatedAt: Foundation.Date?
+            /// Creates a new `CustomOAuthProviderSchema`.
+            ///
+            /// - Parameters:
+            ///   - id: Unique provider identifier
+            ///   - providerType: Type of OAuth provider
+            ///   - identifier: Unique identifier for the provider (must start with 'custom:' prefix)
+            ///   - name: Human-readable name of the provider
+            ///   - clientId: OAuth client ID
+            ///   - acceptableClientIds: Additional acceptable client IDs for token validation
+            ///   - scopes: OAuth scopes to request (OIDC providers will automatically include 'openid')
+            ///   - pkceEnabled: Whether PKCE (Proof Key for Code Exchange) is enabled
+            ///   - attributeMapping: Maps provider claims to user attributes
+            ///   - customClaimsAllowlist: Raw IdP claim keys copied verbatim into the user's custom_claims (e.g. groups, org_id). For OIDC providers these are read from the ID token claims (falling back to the userinfo response when no ID token is returned); for OAuth2 providers they are read from the userinfo response. Empty preserves no non-standard claims.
+            ///   - authorizationParams: Additional parameters to include in authorization requests as string key-value pairs (cannot override reserved OAuth parameters)
+            ///   - enabled: Whether the provider is enabled
+            ///   - emailOptional: Whether email is optional for users from this provider
+            ///   - issuer: OIDC issuer URL (required for OIDC providers)
+            ///   - discoveryUrl: OIDC discovery URL (optional, defaults to {issuer}/.well-known/openid-configuration)
+            ///   - skipNonceCheck: Skip nonce validation for OIDC (not recommended for production)
+            ///   - authorizationUrl: OAuth 2.0 authorization endpoint (required for OAuth2 providers)
+            ///   - tokenUrl: OAuth 2.0 token endpoint (required for OAuth2 providers)
+            ///   - userinfoUrl: OAuth 2.0 userinfo endpoint (required for OAuth2 providers)
+            ///   - jwksUri: JWKS URI for token validation (optional for OAuth2 providers)
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                providerType: Components.Schemas.CustomOAuthProviderSchema.ProviderTypePayload,
+                identifier: Swift.String,
+                name: Swift.String,
+                clientId: Swift.String,
+                acceptableClientIds: [Swift.String]? = nil,
+                scopes: [Swift.String]? = nil,
+                pkceEnabled: Swift.Bool? = nil,
+                attributeMapping: Components.Schemas.CustomOAuthProviderSchema.AttributeMappingPayload? = nil,
+                customClaimsAllowlist: [Swift.String]? = nil,
+                authorizationParams: Components.Schemas.CustomOAuthProviderSchema.AuthorizationParamsPayload? = nil,
+                enabled: Swift.Bool? = nil,
+                emailOptional: Swift.Bool? = nil,
+                issuer: Swift.String? = nil,
+                discoveryUrl: Swift.String? = nil,
+                skipNonceCheck: Swift.Bool? = nil,
+                authorizationUrl: Swift.String? = nil,
+                tokenUrl: Swift.String? = nil,
+                userinfoUrl: Swift.String? = nil,
+                jwksUri: Swift.String? = nil,
+                createdAt: Foundation.Date? = nil,
+                updatedAt: Foundation.Date? = nil
+            ) {
+                self.id = id
+                self.providerType = providerType
+                self.identifier = identifier
+                self.name = name
+                self.clientId = clientId
+                self.acceptableClientIds = acceptableClientIds
+                self.scopes = scopes
+                self.pkceEnabled = pkceEnabled
+                self.attributeMapping = attributeMapping
+                self.customClaimsAllowlist = customClaimsAllowlist
+                self.authorizationParams = authorizationParams
+                self.enabled = enabled
+                self.emailOptional = emailOptional
+                self.issuer = issuer
+                self.discoveryUrl = discoveryUrl
+                self.skipNonceCheck = skipNonceCheck
+                self.authorizationUrl = authorizationUrl
+                self.tokenUrl = tokenUrl
+                self.userinfoUrl = userinfoUrl
+                self.jwksUri = jwksUri
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case providerType = "provider_type"
+                case identifier
+                case name
+                case clientId = "client_id"
+                case acceptableClientIds = "acceptable_client_ids"
+                case scopes
+                case pkceEnabled = "pkce_enabled"
+                case attributeMapping = "attribute_mapping"
+                case customClaimsAllowlist = "custom_claims_allowlist"
+                case authorizationParams = "authorization_params"
+                case enabled
+                case emailOptional = "email_optional"
+                case issuer
+                case discoveryUrl = "discovery_url"
+                case skipNonceCheck = "skip_nonce_check"
+                case authorizationUrl = "authorization_url"
+                case tokenUrl = "token_url"
+                case userinfoUrl = "userinfo_url"
+                case jwksUri = "jwks_uri"
                 case createdAt = "created_at"
                 case updatedAt = "updated_at"
             }
@@ -6795,50 +7149,15 @@ public enum Operations {
                     }
                     /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/json/channel`.
                     public var channel: Operations.PostFactorsFactorIdChallenge.Input.Body.JsonPayload.ChannelPayload?
-                    /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/json/webauthn`.
-                    public struct WebauthnPayload: Codable, Hashable, Sendable {
-                        /// The relying party identifier (usually the domain)
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/json/webauthn/rpId`.
-                        public var rpId: Swift.String
-                        /// List of allowed origins for WebAuthn
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/json/webauthn/rpOrigins`.
-                        public var rpOrigins: [Swift.String]
-                        /// Creates a new `WebauthnPayload`.
-                        ///
-                        /// - Parameters:
-                        ///   - rpId: The relying party identifier (usually the domain)
-                        ///   - rpOrigins: List of allowed origins for WebAuthn
-                        public init(
-                            rpId: Swift.String,
-                            rpOrigins: [Swift.String]
-                        ) {
-                            self.rpId = rpId
-                            self.rpOrigins = rpOrigins
-                        }
-                        public enum CodingKeys: String, CodingKey {
-                            case rpId
-                            case rpOrigins
-                        }
-                    }
-                    /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/json/webauthn`.
-                    public var webauthn: Operations.PostFactorsFactorIdChallenge.Input.Body.JsonPayload.WebauthnPayload?
                     /// Creates a new `JsonPayload`.
                     ///
                     /// - Parameters:
                     ///   - channel:
-                    ///   - webauthn:
-                    public init(
-                        channel: Operations.PostFactorsFactorIdChallenge.Input.Body.JsonPayload.ChannelPayload? = nil,
-                        webauthn: Operations.PostFactorsFactorIdChallenge.Input.Body.JsonPayload.WebauthnPayload? = nil
-                    ) {
+                    public init(channel: Operations.PostFactorsFactorIdChallenge.Input.Body.JsonPayload.ChannelPayload? = nil) {
                         self.channel = channel
-                        self.webauthn = webauthn
                     }
                     public enum CodingKeys: String, CodingKey {
                         case channel
-                        case webauthn
                     }
                 }
                 /// - Remark: Generated from `#/paths/factors/{factorId}/challenge/POST/requestBody/content/application\/json`.
@@ -7070,14 +7389,6 @@ public enum Operations {
                     public var code: Swift.String?
                     /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn`.
                     public struct WebauthnPayload: Codable, Hashable, Sendable {
-                        /// The relying party identifier
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn/rpId`.
-                        public var rpId: Swift.String
-                        /// List of allowed origins for WebAuthn
-                        ///
-                        /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn/rpOrigins`.
-                        public var rpOrigins: [Swift.String]
                         /// Type of WebAuthn operation
                         ///
                         /// - Remark: Generated from `#/paths/factors/{factorId}/verify/POST/requestBody/json/webauthn/type`.
@@ -7096,24 +7407,16 @@ public enum Operations {
                         /// Creates a new `WebauthnPayload`.
                         ///
                         /// - Parameters:
-                        ///   - rpId: The relying party identifier
-                        ///   - rpOrigins: List of allowed origins for WebAuthn
                         ///   - _type: Type of WebAuthn operation
                         ///   - credentialResponse: WebAuthn credential response from the client
                         public init(
-                            rpId: Swift.String,
-                            rpOrigins: [Swift.String],
                             _type: Operations.PostFactorsFactorIdVerify.Input.Body.JsonPayload.WebauthnPayload._TypePayload,
                             credentialResponse: OpenAPIRuntime.OpenAPIObjectContainer
                         ) {
-                            self.rpId = rpId
-                            self.rpOrigins = rpOrigins
                             self._type = _type
                             self.credentialResponse = credentialResponse
                         }
                         public enum CodingKeys: String, CodingKey {
-                            case rpId
-                            case rpOrigins
                             case _type = "type"
                             case credentialResponse = "credential_response"
                         }
@@ -8946,15 +9249,17 @@ public enum Operations {
                             /// - user_updated_password
                             /// - token_revoked
                             /// - token_refreshed
-                            /// - generate_recovery_codes
                             /// - factor_in_progress
                             /// - factor_unenrolled
                             /// - challenge_created
                             /// - verification_attempted
                             /// - factor_deleted
-                            /// - recovery_codes_deleted
                             /// - factor_updated
-                            /// - mfa_code_login
+                            /// - identity_linked
+                            /// - identity_unlinked
+                            /// - passkey_created
+                            /// - passkey_updated
+                            /// - passkey_deleted
                             ///
                             /// - Remark: Generated from `#/paths/admin/audit/GET/responses/200/content/JsonPayload/payload/action`.
                             public var action: Swift.String?
@@ -8964,7 +9269,6 @@ public enum Operations {
                             /// - token
                             /// - user
                             /// - factor
-                            /// - recovery_codes
                             ///
                             /// - Remark: Generated from `#/paths/admin/audit/GET/responses/200/content/JsonPayload/payload/log_type`.
                             public var logType: Swift.String?
@@ -12695,6 +12999,20 @@ public enum Operations {
                     ///
                     /// - Remark: Generated from `#/paths/admin/oauth/clients/{client_id}/PUT/requestBody/json/grant_types`.
                     public var grantTypes: Operations.PutAdminOauthClientsClientId.Input.Body.JsonPayload.GrantTypesPayload?
+                    /// Authentication method for the token endpoint. Must be compatible with the client's current client_type. Confidential clients can use 'client_secret_basic' or 'client_secret_post'. Public clients can only use 'none'.
+                    ///
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/oauth/clients/{client_id}/PUT/requestBody/json/token_endpoint_auth_method`.
+                    @frozen public enum TokenEndpointAuthMethodPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                        case none = "none"
+                        case clientSecretBasic = "client_secret_basic"
+                        case clientSecretPost = "client_secret_post"
+                    }
+                    /// Authentication method for the token endpoint. Must be compatible with the client's current client_type. Confidential clients can use 'client_secret_basic' or 'client_secret_post'. Public clients can only use 'none'.
+                    ///
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/oauth/clients/{client_id}/PUT/requestBody/json/token_endpoint_auth_method`.
+                    public var tokenEndpointAuthMethod: Operations.PutAdminOauthClientsClientId.Input.Body.JsonPayload.TokenEndpointAuthMethodPayload?
                     /// Creates a new `JsonPayload`.
                     ///
                     /// - Parameters:
@@ -12703,18 +13021,21 @@ public enum Operations {
                     ///   - logoUri: URL of the client application's logo
                     ///   - redirectUris: Array of redirect URIs used by the client
                     ///   - grantTypes: OAuth grant types the client is authorized to use
+                    ///   - tokenEndpointAuthMethod: Authentication method for the token endpoint. Must be compatible with the client's current client_type. Confidential clients can use 'client_secret_basic' or 'client_secret_post'. Public clients can only use 'none'.
                     public init(
                         clientName: Swift.String? = nil,
                         clientUri: Swift.String? = nil,
                         logoUri: Swift.String? = nil,
                         redirectUris: [Swift.String]? = nil,
-                        grantTypes: Operations.PutAdminOauthClientsClientId.Input.Body.JsonPayload.GrantTypesPayload? = nil
+                        grantTypes: Operations.PutAdminOauthClientsClientId.Input.Body.JsonPayload.GrantTypesPayload? = nil,
+                        tokenEndpointAuthMethod: Operations.PutAdminOauthClientsClientId.Input.Body.JsonPayload.TokenEndpointAuthMethodPayload? = nil
                     ) {
                         self.clientName = clientName
                         self.clientUri = clientUri
                         self.logoUri = logoUri
                         self.redirectUris = redirectUris
                         self.grantTypes = grantTypes
+                        self.tokenEndpointAuthMethod = tokenEndpointAuthMethod
                     }
                     public enum CodingKeys: String, CodingKey {
                         case clientName = "client_name"
@@ -12722,6 +13043,7 @@ public enum Operations {
                         case logoUri = "logo_uri"
                         case redirectUris = "redirect_uris"
                         case grantTypes = "grant_types"
+                        case tokenEndpointAuthMethod = "token_endpoint_auth_method"
                     }
                 }
                 /// - Remark: Generated from `#/paths/admin/oauth/clients/{client_id}/PUT/requestBody/content/application\/json`.
@@ -13436,6 +13758,1736 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// List all custom OIDC/OAuth providers
+    ///
+    /// Retrieves a list of all custom OAuth 2.0 and OIDC provider configurations. Optionally filter by provider type. Only available when custom OIDC/OAuth providers are enabled (set `GOTRUE_CUSTOM_OAUTH_ENABLED=true` for self-hosted or enable in Supabase Dashboard).
+    ///
+    ///
+    /// - Remark: HTTP `GET /admin/custom-providers`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/get`.
+    public enum GetAdminCustomProviders {
+        public static let id: Swift.String = "get/admin/custom-providers"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/admin/custom-providers/GET/query`.
+            public struct Query: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/GET/query/type`.
+                @frozen public enum _TypePayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case oauth2 = "oauth2"
+                    case oidc = "oidc"
+                }
+                /// Filter by provider type
+                ///
+                /// - Remark: Generated from `#/paths/admin/custom-providers/GET/query/type`.
+                public var _type: Operations.GetAdminCustomProviders.Input.Query._TypePayload?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - _type: Filter by provider type
+                public init(_type: Operations.GetAdminCustomProviders.Input.Query._TypePayload? = nil) {
+                    self._type = _type
+                }
+            }
+            public var query: Operations.GetAdminCustomProviders.Input.Query
+            /// - Remark: Generated from `#/paths/admin/custom-providers/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.GetAdminCustomProviders.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.GetAdminCustomProviders.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.GetAdminCustomProviders.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - headers:
+            public init(
+                query: Operations.GetAdminCustomProviders.Input.Query = .init(),
+                headers: Operations.GetAdminCustomProviders.Input.Headers = .init()
+            ) {
+                self.query = query
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/GET/responses/200/content/json`.
+                    public struct JsonPayload: Codable, Hashable, Sendable {
+                        /// - Remark: Generated from `#/paths/admin/custom-providers/GET/responses/200/content/json/providers`.
+                        public var providers: [Components.Schemas.CustomOAuthProviderSchema]?
+                        /// Creates a new `JsonPayload`.
+                        ///
+                        /// - Parameters:
+                        ///   - providers:
+                        public init(providers: [Components.Schemas.CustomOAuthProviderSchema]? = nil) {
+                            self.providers = providers
+                        }
+                        public enum CodingKeys: String, CodingKey {
+                            case providers
+                        }
+                    }
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/GET/responses/200/content/application\/json`.
+                    case json(Operations.GetAdminCustomProviders.Output.Ok.Body.JsonPayload)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Operations.GetAdminCustomProviders.Output.Ok.Body.JsonPayload {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.GetAdminCustomProviders.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.GetAdminCustomProviders.Output.Ok.Body) {
+                    self.body = body
+                }
+            }
+            /// List of custom OIDC/OAuth providers
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/get/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.GetAdminCustomProviders.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.GetAdminCustomProviders.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/GET/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/GET/responses/400/content/application\/json`.
+                    case json(Components.Schemas.ErrorSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.ErrorSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.GetAdminCustomProviders.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.GetAdminCustomProviders.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Invalid type parameter
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/get/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.GetAdminCustomProviders.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.GetAdminCustomProviders.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// HTTP Unauthorized response.
+            ///
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/get/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Components.Responses.UnauthorizedResponse)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Components.Responses.UnauthorizedResponse {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// HTTP Forbidden response.
+            ///
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/get/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Components.Responses.ForbiddenResponse)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Components.Responses.ForbiddenResponse {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// Create a new custom OIDC/OAuth provider
+    ///
+    /// Creates a new custom OAuth 2.0 or OIDC provider configuration. Required fields differ based on provider_type. Only available when custom OIDC/OAuth providers are enabled. For OIDC providers, the server fetches and validates the OpenID Connect discovery document from the issuer's well-known endpoint (or the provided discovery_url) at creation time. This ensures the issuer is reachable and correctly configured before the provider is stored.
+    ///
+    ///
+    /// - Remark: HTTP `POST /admin/custom-providers`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/post`.
+    public enum PostAdminCustomProviders {
+        public static let id: Swift.String = "post/admin/custom-providers"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/admin/custom-providers/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PostAdminCustomProviders.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PostAdminCustomProviders.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.PostAdminCustomProviders.Input.Headers
+            /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json`.
+                public struct JsonPayload: Codable, Hashable, Sendable {
+                    /// Type of OAuth provider
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/provider_type`.
+                    @frozen public enum ProviderTypePayload: String, Codable, Hashable, Sendable, CaseIterable {
+                        case oauth2 = "oauth2"
+                        case oidc = "oidc"
+                    }
+                    /// Type of OAuth provider
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/provider_type`.
+                    public var providerType: Operations.PostAdminCustomProviders.Input.Body.JsonPayload.ProviderTypePayload
+                    /// Unique identifier (will be prefixed with 'custom:' automatically). Cannot use reserved provider names.
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/identifier`.
+                    public var identifier: Swift.String
+                    /// Human-readable display name
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/name`.
+                    public var name: Swift.String
+                    /// OAuth client ID from the provider
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/client_id`.
+                    public var clientId: Swift.String
+                    /// OAuth client secret (will be encrypted at rest)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/client_secret`.
+                    public var clientSecret: Swift.String
+                    /// Additional acceptable client IDs for token validation
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/acceptable_client_ids`.
+                    public var acceptableClientIds: [Swift.String]?
+                    /// OAuth scopes to request (OIDC providers will automatically include 'openid')
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/scopes`.
+                    public var scopes: [Swift.String]?
+                    /// Enable PKCE (Proof Key for Code Exchange)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/pkce_enabled`.
+                    public var pkceEnabled: Swift.Bool?
+                    /// Map provider claims to user attributes (cannot map to protected system fields)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/attribute_mapping`.
+                    public struct AttributeMappingPayload: Codable, Hashable, Sendable {
+                        /// A container of undocumented properties.
+                        public var additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer
+                        /// Creates a new `AttributeMappingPayload`.
+                        ///
+                        /// - Parameters:
+                        ///   - additionalProperties: A container of undocumented properties.
+                        public init(additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer = .init()) {
+                            self.additionalProperties = additionalProperties
+                        }
+                        public init(from decoder: any Decoder) throws {
+                            additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                        }
+                        public func encode(to encoder: any Encoder) throws {
+                            try encoder.encodeAdditionalProperties(additionalProperties)
+                        }
+                    }
+                    /// Map provider claims to user attributes (cannot map to protected system fields)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/attribute_mapping`.
+                    public var attributeMapping: Operations.PostAdminCustomProviders.Input.Body.JsonPayload.AttributeMappingPayload?
+                    /// Raw IdP claim keys to copy verbatim into the user's custom_claims (e.g. groups, org_id). For OIDC providers these are read from the ID token claims (falling back to the userinfo response when no ID token is returned); for OAuth2 providers they are read from the userinfo response. Empty preserves no non-standard claims.
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/custom_claims_allowlist`.
+                    public var customClaimsAllowlist: [Swift.String]?
+                    /// Additional authorization request parameters as string key-value pairs (cannot override reserved OAuth parameters)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/authorization_params`.
+                    public struct AuthorizationParamsPayload: Codable, Hashable, Sendable {
+                        /// A container of undocumented properties.
+                        public var additionalProperties: [String: Swift.String]
+                        /// Creates a new `AuthorizationParamsPayload`.
+                        ///
+                        /// - Parameters:
+                        ///   - additionalProperties: A container of undocumented properties.
+                        public init(additionalProperties: [String: Swift.String] = .init()) {
+                            self.additionalProperties = additionalProperties
+                        }
+                        public init(from decoder: any Decoder) throws {
+                            additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                        }
+                        public func encode(to encoder: any Encoder) throws {
+                            try encoder.encodeAdditionalProperties(additionalProperties)
+                        }
+                    }
+                    /// Additional authorization request parameters as string key-value pairs (cannot override reserved OAuth parameters)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/authorization_params`.
+                    public var authorizationParams: Operations.PostAdminCustomProviders.Input.Body.JsonPayload.AuthorizationParamsPayload?
+                    /// Whether the provider is enabled
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/enabled`.
+                    public var enabled: Swift.Bool?
+                    /// Whether email is optional for users from this provider
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/email_optional`.
+                    public var emailOptional: Swift.Bool?
+                    /// OIDC issuer URL (required for provider_type: oidc)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/issuer`.
+                    public var issuer: Swift.String?
+                    /// OIDC discovery URL (optional for OIDC, defaults to {issuer}/.well-known/openid-configuration)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/discovery_url`.
+                    public var discoveryUrl: Swift.String?
+                    /// Skip nonce validation for OIDC (not recommended for production)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/skip_nonce_check`.
+                    public var skipNonceCheck: Swift.Bool?
+                    /// OAuth 2.0 authorization endpoint (required for provider_type: oauth2)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/authorization_url`.
+                    public var authorizationUrl: Swift.String?
+                    /// OAuth 2.0 token endpoint (required for provider_type: oauth2)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/token_url`.
+                    public var tokenUrl: Swift.String?
+                    /// OAuth 2.0 userinfo endpoint (required for provider_type: oauth2)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/userinfo_url`.
+                    public var userinfoUrl: Swift.String?
+                    /// JWKS URI for token validation (optional for OAuth2)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/json/jwks_uri`.
+                    public var jwksUri: Swift.String?
+                    /// Creates a new `JsonPayload`.
+                    ///
+                    /// - Parameters:
+                    ///   - providerType: Type of OAuth provider
+                    ///   - identifier: Unique identifier (will be prefixed with 'custom:' automatically). Cannot use reserved provider names.
+                    ///   - name: Human-readable display name
+                    ///   - clientId: OAuth client ID from the provider
+                    ///   - clientSecret: OAuth client secret (will be encrypted at rest)
+                    ///   - acceptableClientIds: Additional acceptable client IDs for token validation
+                    ///   - scopes: OAuth scopes to request (OIDC providers will automatically include 'openid')
+                    ///   - pkceEnabled: Enable PKCE (Proof Key for Code Exchange)
+                    ///   - attributeMapping: Map provider claims to user attributes (cannot map to protected system fields)
+                    ///   - customClaimsAllowlist: Raw IdP claim keys to copy verbatim into the user's custom_claims (e.g. groups, org_id). For OIDC providers these are read from the ID token claims (falling back to the userinfo response when no ID token is returned); for OAuth2 providers they are read from the userinfo response. Empty preserves no non-standard claims.
+                    ///   - authorizationParams: Additional authorization request parameters as string key-value pairs (cannot override reserved OAuth parameters)
+                    ///   - enabled: Whether the provider is enabled
+                    ///   - emailOptional: Whether email is optional for users from this provider
+                    ///   - issuer: OIDC issuer URL (required for provider_type: oidc)
+                    ///   - discoveryUrl: OIDC discovery URL (optional for OIDC, defaults to {issuer}/.well-known/openid-configuration)
+                    ///   - skipNonceCheck: Skip nonce validation for OIDC (not recommended for production)
+                    ///   - authorizationUrl: OAuth 2.0 authorization endpoint (required for provider_type: oauth2)
+                    ///   - tokenUrl: OAuth 2.0 token endpoint (required for provider_type: oauth2)
+                    ///   - userinfoUrl: OAuth 2.0 userinfo endpoint (required for provider_type: oauth2)
+                    ///   - jwksUri: JWKS URI for token validation (optional for OAuth2)
+                    public init(
+                        providerType: Operations.PostAdminCustomProviders.Input.Body.JsonPayload.ProviderTypePayload,
+                        identifier: Swift.String,
+                        name: Swift.String,
+                        clientId: Swift.String,
+                        clientSecret: Swift.String,
+                        acceptableClientIds: [Swift.String]? = nil,
+                        scopes: [Swift.String]? = nil,
+                        pkceEnabled: Swift.Bool? = nil,
+                        attributeMapping: Operations.PostAdminCustomProviders.Input.Body.JsonPayload.AttributeMappingPayload? = nil,
+                        customClaimsAllowlist: [Swift.String]? = nil,
+                        authorizationParams: Operations.PostAdminCustomProviders.Input.Body.JsonPayload.AuthorizationParamsPayload? = nil,
+                        enabled: Swift.Bool? = nil,
+                        emailOptional: Swift.Bool? = nil,
+                        issuer: Swift.String? = nil,
+                        discoveryUrl: Swift.String? = nil,
+                        skipNonceCheck: Swift.Bool? = nil,
+                        authorizationUrl: Swift.String? = nil,
+                        tokenUrl: Swift.String? = nil,
+                        userinfoUrl: Swift.String? = nil,
+                        jwksUri: Swift.String? = nil
+                    ) {
+                        self.providerType = providerType
+                        self.identifier = identifier
+                        self.name = name
+                        self.clientId = clientId
+                        self.clientSecret = clientSecret
+                        self.acceptableClientIds = acceptableClientIds
+                        self.scopes = scopes
+                        self.pkceEnabled = pkceEnabled
+                        self.attributeMapping = attributeMapping
+                        self.customClaimsAllowlist = customClaimsAllowlist
+                        self.authorizationParams = authorizationParams
+                        self.enabled = enabled
+                        self.emailOptional = emailOptional
+                        self.issuer = issuer
+                        self.discoveryUrl = discoveryUrl
+                        self.skipNonceCheck = skipNonceCheck
+                        self.authorizationUrl = authorizationUrl
+                        self.tokenUrl = tokenUrl
+                        self.userinfoUrl = userinfoUrl
+                        self.jwksUri = jwksUri
+                    }
+                    public enum CodingKeys: String, CodingKey {
+                        case providerType = "provider_type"
+                        case identifier
+                        case name
+                        case clientId = "client_id"
+                        case clientSecret = "client_secret"
+                        case acceptableClientIds = "acceptable_client_ids"
+                        case scopes
+                        case pkceEnabled = "pkce_enabled"
+                        case attributeMapping = "attribute_mapping"
+                        case customClaimsAllowlist = "custom_claims_allowlist"
+                        case authorizationParams = "authorization_params"
+                        case enabled
+                        case emailOptional = "email_optional"
+                        case issuer
+                        case discoveryUrl = "discovery_url"
+                        case skipNonceCheck = "skip_nonce_check"
+                        case authorizationUrl = "authorization_url"
+                        case tokenUrl = "token_url"
+                        case userinfoUrl = "userinfo_url"
+                        case jwksUri = "jwks_uri"
+                    }
+                }
+                /// - Remark: Generated from `#/paths/admin/custom-providers/POST/requestBody/content/application\/json`.
+                case json(Operations.PostAdminCustomProviders.Input.Body.JsonPayload)
+            }
+            public var body: Operations.PostAdminCustomProviders.Input.Body
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.PostAdminCustomProviders.Input.Headers = .init(),
+                body: Operations.PostAdminCustomProviders.Input.Body
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Created: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/POST/responses/201/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/responses/201/content/application\/json`.
+                    case json(Components.Schemas.CustomOAuthProviderSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.CustomOAuthProviderSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.PostAdminCustomProviders.Output.Created.Body
+                /// Creates a new `Created`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.PostAdminCustomProviders.Output.Created.Body) {
+                    self.body = body
+                }
+            }
+            /// Custom OIDC/OAuth provider created successfully
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/post/responses/201`.
+            ///
+            /// HTTP response code: `201 created`.
+            case created(Operations.PostAdminCustomProviders.Output.Created)
+            /// The associated value of the enum case if `self` is `.created`.
+            ///
+            /// - Throws: An error if `self` is not `.created`.
+            /// - SeeAlso: `.created`.
+            public var created: Operations.PostAdminCustomProviders.Output.Created {
+                get throws {
+                    switch self {
+                    case let .created(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/POST/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/POST/responses/400/content/application\/json`.
+                    case json(Components.Schemas.ErrorSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.ErrorSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.PostAdminCustomProviders.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.PostAdminCustomProviders.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Bad request - validation failed, provider exists, or quota exceeded
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/post/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.PostAdminCustomProviders.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.PostAdminCustomProviders.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// HTTP Unauthorized response.
+            ///
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/post/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Components.Responses.UnauthorizedResponse)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Components.Responses.UnauthorizedResponse {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// HTTP Forbidden response.
+            ///
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/post/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Components.Responses.ForbiddenResponse)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Components.Responses.ForbiddenResponse {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// Get custom OIDC/OAuth provider details
+    ///
+    /// Retrieves details of a specific custom OIDC/OAuth provider. Only available when custom OIDC/OAuth providers are enabled.
+    ///
+    ///
+    /// - Remark: HTTP `GET /admin/custom-providers/{identifier}`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/get`.
+    public enum GetAdminCustomProvidersIdentifier {
+        public static let id: Swift.String = "get/admin/custom-providers/{identifier}"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// Provider identifier (must start with 'custom:' prefix)
+                ///
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/GET/path/identifier`.
+                public var identifier: Swift.String
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - identifier: Provider identifier (must start with 'custom:' prefix)
+                public init(identifier: Swift.String) {
+                    self.identifier = identifier
+                }
+            }
+            public var path: Operations.GetAdminCustomProvidersIdentifier.Input.Path
+            /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.GetAdminCustomProvidersIdentifier.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.GetAdminCustomProvidersIdentifier.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.GetAdminCustomProvidersIdentifier.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.GetAdminCustomProvidersIdentifier.Input.Path,
+                headers: Operations.GetAdminCustomProvidersIdentifier.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/GET/responses/200/content/application\/json`.
+                    case json(Components.Schemas.CustomOAuthProviderSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.CustomOAuthProviderSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.GetAdminCustomProvidersIdentifier.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.GetAdminCustomProvidersIdentifier.Output.Ok.Body) {
+                    self.body = body
+                }
+            }
+            /// Custom OIDC/OAuth provider details
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/get/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.GetAdminCustomProvidersIdentifier.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.GetAdminCustomProvidersIdentifier.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/GET/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/GET/responses/400/content/application\/json`.
+                    case json(Components.Schemas.ErrorSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.ErrorSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.GetAdminCustomProvidersIdentifier.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.GetAdminCustomProvidersIdentifier.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Invalid identifier format
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/get/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.GetAdminCustomProvidersIdentifier.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.GetAdminCustomProvidersIdentifier.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// HTTP Unauthorized response.
+            ///
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/get/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Components.Responses.UnauthorizedResponse)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Components.Responses.UnauthorizedResponse {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// HTTP Forbidden response.
+            ///
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/get/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Components.Responses.ForbiddenResponse)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Components.Responses.ForbiddenResponse {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/GET/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/GET/responses/404/content/application\/json`.
+                    case json(Components.Schemas.ErrorSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.ErrorSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.GetAdminCustomProvidersIdentifier.Output.NotFound.Body
+                /// Creates a new `NotFound`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.GetAdminCustomProvidersIdentifier.Output.NotFound.Body) {
+                    self.body = body
+                }
+            }
+            /// Provider not found
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/get/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.GetAdminCustomProvidersIdentifier.Output.NotFound)
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.GetAdminCustomProvidersIdentifier.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// Update custom OIDC/OAuth provider
+    ///
+    /// Updates an existing custom OIDC/OAuth provider. All fields are optional. Only provided fields will be updated. Only available when custom OIDC/OAuth providers are enabled. When `issuer` or `discovery_url` is changed on an OIDC provider, the server re-fetches and validates the discovery document before persisting.
+    ///
+    ///
+    /// - Remark: HTTP `PUT /admin/custom-providers/{identifier}`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/put`.
+    public enum PutAdminCustomProvidersIdentifier {
+        public static let id: Swift.String = "put/admin/custom-providers/{identifier}"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/path`.
+            public struct Path: Sendable, Hashable {
+                /// Provider identifier (must start with 'custom:' prefix)
+                ///
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/path/identifier`.
+                public var identifier: Swift.String
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - identifier: Provider identifier (must start with 'custom:' prefix)
+                public init(identifier: Swift.String) {
+                    self.identifier = identifier
+                }
+            }
+            public var path: Operations.PutAdminCustomProvidersIdentifier.Input.Path
+            /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PutAdminCustomProvidersIdentifier.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PutAdminCustomProvidersIdentifier.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.PutAdminCustomProvidersIdentifier.Input.Headers
+            /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json`.
+                public struct JsonPayload: Codable, Hashable, Sendable {
+                    /// Human-readable display name
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/name`.
+                    public var name: Swift.String?
+                    /// OAuth client ID
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/client_id`.
+                    public var clientId: Swift.String?
+                    /// OAuth client secret (only provide if changing, will be encrypted)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/client_secret`.
+                    public var clientSecret: Swift.String?
+                    /// Additional acceptable client IDs
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/acceptable_client_ids`.
+                    public var acceptableClientIds: [Swift.String]?
+                    /// OAuth scopes to request
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/scopes`.
+                    public var scopes: [Swift.String]?
+                    /// Enable PKCE
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/pkce_enabled`.
+                    public var pkceEnabled: Swift.Bool?
+                    /// Map provider claims to user attributes
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/attribute_mapping`.
+                    public struct AttributeMappingPayload: Codable, Hashable, Sendable {
+                        /// A container of undocumented properties.
+                        public var additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer
+                        /// Creates a new `AttributeMappingPayload`.
+                        ///
+                        /// - Parameters:
+                        ///   - additionalProperties: A container of undocumented properties.
+                        public init(additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer = .init()) {
+                            self.additionalProperties = additionalProperties
+                        }
+                        public init(from decoder: any Decoder) throws {
+                            additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                        }
+                        public func encode(to encoder: any Encoder) throws {
+                            try encoder.encodeAdditionalProperties(additionalProperties)
+                        }
+                    }
+                    /// Map provider claims to user attributes
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/attribute_mapping`.
+                    public var attributeMapping: Operations.PutAdminCustomProvidersIdentifier.Input.Body.JsonPayload.AttributeMappingPayload?
+                    /// Raw IdP claim keys to copy verbatim into the user's custom_claims (e.g. groups, org_id). For OIDC providers these are read from the ID token claims (falling back to the userinfo response when no ID token is returned); for OAuth2 providers they are read from the userinfo response. Empty preserves no non-standard claims.
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/custom_claims_allowlist`.
+                    public var customClaimsAllowlist: [Swift.String]?
+                    /// Additional authorization request parameters as string key-value pairs
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/authorization_params`.
+                    public struct AuthorizationParamsPayload: Codable, Hashable, Sendable {
+                        /// A container of undocumented properties.
+                        public var additionalProperties: [String: Swift.String]
+                        /// Creates a new `AuthorizationParamsPayload`.
+                        ///
+                        /// - Parameters:
+                        ///   - additionalProperties: A container of undocumented properties.
+                        public init(additionalProperties: [String: Swift.String] = .init()) {
+                            self.additionalProperties = additionalProperties
+                        }
+                        public init(from decoder: any Decoder) throws {
+                            additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                        }
+                        public func encode(to encoder: any Encoder) throws {
+                            try encoder.encodeAdditionalProperties(additionalProperties)
+                        }
+                    }
+                    /// Additional authorization request parameters as string key-value pairs
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/authorization_params`.
+                    public var authorizationParams: Operations.PutAdminCustomProvidersIdentifier.Input.Body.JsonPayload.AuthorizationParamsPayload?
+                    /// Whether the provider is enabled
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/enabled`.
+                    public var enabled: Swift.Bool?
+                    /// Whether email is optional
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/email_optional`.
+                    public var emailOptional: Swift.Bool?
+                    /// OIDC issuer URL (for OIDC providers)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/issuer`.
+                    public var issuer: Swift.String?
+                    /// OIDC discovery URL (for OIDC providers)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/discovery_url`.
+                    public var discoveryUrl: Swift.String?
+                    /// Skip nonce validation for OIDC
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/skip_nonce_check`.
+                    public var skipNonceCheck: Swift.Bool?
+                    /// OAuth 2.0 authorization endpoint (for OAuth2 providers)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/authorization_url`.
+                    public var authorizationUrl: Swift.String?
+                    /// OAuth 2.0 token endpoint (for OAuth2 providers)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/token_url`.
+                    public var tokenUrl: Swift.String?
+                    /// OAuth 2.0 userinfo endpoint (for OAuth2 providers)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/userinfo_url`.
+                    public var userinfoUrl: Swift.String?
+                    /// JWKS URI for token validation (for OAuth2 providers)
+                    ///
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/json/jwks_uri`.
+                    public var jwksUri: Swift.String?
+                    /// Creates a new `JsonPayload`.
+                    ///
+                    /// - Parameters:
+                    ///   - name: Human-readable display name
+                    ///   - clientId: OAuth client ID
+                    ///   - clientSecret: OAuth client secret (only provide if changing, will be encrypted)
+                    ///   - acceptableClientIds: Additional acceptable client IDs
+                    ///   - scopes: OAuth scopes to request
+                    ///   - pkceEnabled: Enable PKCE
+                    ///   - attributeMapping: Map provider claims to user attributes
+                    ///   - customClaimsAllowlist: Raw IdP claim keys to copy verbatim into the user's custom_claims (e.g. groups, org_id). For OIDC providers these are read from the ID token claims (falling back to the userinfo response when no ID token is returned); for OAuth2 providers they are read from the userinfo response. Empty preserves no non-standard claims.
+                    ///   - authorizationParams: Additional authorization request parameters as string key-value pairs
+                    ///   - enabled: Whether the provider is enabled
+                    ///   - emailOptional: Whether email is optional
+                    ///   - issuer: OIDC issuer URL (for OIDC providers)
+                    ///   - discoveryUrl: OIDC discovery URL (for OIDC providers)
+                    ///   - skipNonceCheck: Skip nonce validation for OIDC
+                    ///   - authorizationUrl: OAuth 2.0 authorization endpoint (for OAuth2 providers)
+                    ///   - tokenUrl: OAuth 2.0 token endpoint (for OAuth2 providers)
+                    ///   - userinfoUrl: OAuth 2.0 userinfo endpoint (for OAuth2 providers)
+                    ///   - jwksUri: JWKS URI for token validation (for OAuth2 providers)
+                    public init(
+                        name: Swift.String? = nil,
+                        clientId: Swift.String? = nil,
+                        clientSecret: Swift.String? = nil,
+                        acceptableClientIds: [Swift.String]? = nil,
+                        scopes: [Swift.String]? = nil,
+                        pkceEnabled: Swift.Bool? = nil,
+                        attributeMapping: Operations.PutAdminCustomProvidersIdentifier.Input.Body.JsonPayload.AttributeMappingPayload? = nil,
+                        customClaimsAllowlist: [Swift.String]? = nil,
+                        authorizationParams: Operations.PutAdminCustomProvidersIdentifier.Input.Body.JsonPayload.AuthorizationParamsPayload? = nil,
+                        enabled: Swift.Bool? = nil,
+                        emailOptional: Swift.Bool? = nil,
+                        issuer: Swift.String? = nil,
+                        discoveryUrl: Swift.String? = nil,
+                        skipNonceCheck: Swift.Bool? = nil,
+                        authorizationUrl: Swift.String? = nil,
+                        tokenUrl: Swift.String? = nil,
+                        userinfoUrl: Swift.String? = nil,
+                        jwksUri: Swift.String? = nil
+                    ) {
+                        self.name = name
+                        self.clientId = clientId
+                        self.clientSecret = clientSecret
+                        self.acceptableClientIds = acceptableClientIds
+                        self.scopes = scopes
+                        self.pkceEnabled = pkceEnabled
+                        self.attributeMapping = attributeMapping
+                        self.customClaimsAllowlist = customClaimsAllowlist
+                        self.authorizationParams = authorizationParams
+                        self.enabled = enabled
+                        self.emailOptional = emailOptional
+                        self.issuer = issuer
+                        self.discoveryUrl = discoveryUrl
+                        self.skipNonceCheck = skipNonceCheck
+                        self.authorizationUrl = authorizationUrl
+                        self.tokenUrl = tokenUrl
+                        self.userinfoUrl = userinfoUrl
+                        self.jwksUri = jwksUri
+                    }
+                    public enum CodingKeys: String, CodingKey {
+                        case name
+                        case clientId = "client_id"
+                        case clientSecret = "client_secret"
+                        case acceptableClientIds = "acceptable_client_ids"
+                        case scopes
+                        case pkceEnabled = "pkce_enabled"
+                        case attributeMapping = "attribute_mapping"
+                        case customClaimsAllowlist = "custom_claims_allowlist"
+                        case authorizationParams = "authorization_params"
+                        case enabled
+                        case emailOptional = "email_optional"
+                        case issuer
+                        case discoveryUrl = "discovery_url"
+                        case skipNonceCheck = "skip_nonce_check"
+                        case authorizationUrl = "authorization_url"
+                        case tokenUrl = "token_url"
+                        case userinfoUrl = "userinfo_url"
+                        case jwksUri = "jwks_uri"
+                    }
+                }
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/requestBody/content/application\/json`.
+                case json(Operations.PutAdminCustomProvidersIdentifier.Input.Body.JsonPayload)
+            }
+            public var body: Operations.PutAdminCustomProvidersIdentifier.Input.Body
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.PutAdminCustomProvidersIdentifier.Input.Path,
+                headers: Operations.PutAdminCustomProvidersIdentifier.Input.Headers = .init(),
+                body: Operations.PutAdminCustomProvidersIdentifier.Input.Body
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/responses/200/content/application\/json`.
+                    case json(Components.Schemas.CustomOAuthProviderSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.CustomOAuthProviderSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.PutAdminCustomProvidersIdentifier.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.PutAdminCustomProvidersIdentifier.Output.Ok.Body) {
+                    self.body = body
+                }
+            }
+            /// Custom OIDC/OAuth provider updated successfully
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/put/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.PutAdminCustomProvidersIdentifier.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.PutAdminCustomProvidersIdentifier.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/responses/400/content/application\/json`.
+                    case json(Components.Schemas.ErrorSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.ErrorSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.PutAdminCustomProvidersIdentifier.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.PutAdminCustomProvidersIdentifier.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Invalid identifier, validation failed, or OIDC discovery validation failed
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/put/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.PutAdminCustomProvidersIdentifier.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.PutAdminCustomProvidersIdentifier.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// HTTP Unauthorized response.
+            ///
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/put/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Components.Responses.UnauthorizedResponse)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Components.Responses.UnauthorizedResponse {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// HTTP Forbidden response.
+            ///
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/put/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Components.Responses.ForbiddenResponse)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Components.Responses.ForbiddenResponse {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/PUT/responses/404/content/application\/json`.
+                    case json(Components.Schemas.ErrorSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.ErrorSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.PutAdminCustomProvidersIdentifier.Output.NotFound.Body
+                /// Creates a new `NotFound`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.PutAdminCustomProvidersIdentifier.Output.NotFound.Body) {
+                    self.body = body
+                }
+            }
+            /// Provider not found
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/put/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.PutAdminCustomProvidersIdentifier.Output.NotFound)
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.PutAdminCustomProvidersIdentifier.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// Delete custom OIDC/OAuth provider
+    ///
+    /// Permanently removes a custom OIDC/OAuth provider configuration. Only available when custom OIDC/OAuth providers are enabled.
+    ///
+    ///
+    /// - Remark: HTTP `DELETE /admin/custom-providers/{identifier}`.
+    /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/delete`.
+    public enum DeleteAdminCustomProvidersIdentifier {
+        public static let id: Swift.String = "delete/admin/custom-providers/{identifier}"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// Provider identifier (must start with 'custom:' prefix)
+                ///
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/DELETE/path/identifier`.
+                public var identifier: Swift.String
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - identifier: Provider identifier (must start with 'custom:' prefix)
+                public init(identifier: Swift.String) {
+                    self.identifier = identifier
+                }
+            }
+            public var path: Operations.DeleteAdminCustomProvidersIdentifier.Input.Path
+            /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.DeleteAdminCustomProvidersIdentifier.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.DeleteAdminCustomProvidersIdentifier.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.DeleteAdminCustomProvidersIdentifier.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.DeleteAdminCustomProvidersIdentifier.Input.Path,
+                headers: Operations.DeleteAdminCustomProvidersIdentifier.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct NoContent: Sendable, Hashable {
+                /// Creates a new `NoContent`.
+                public init() {}
+            }
+            /// Custom OIDC/OAuth provider deleted successfully (no content)
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/delete/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            case noContent(Operations.DeleteAdminCustomProvidersIdentifier.Output.NoContent)
+            /// Custom OIDC/OAuth provider deleted successfully (no content)
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/delete/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Operations.DeleteAdminCustomProvidersIdentifier.Output.NoContent {
+                get throws {
+                    switch self {
+                    case let .noContent(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "noContent",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/DELETE/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/DELETE/responses/400/content/application\/json`.
+                    case json(Components.Schemas.ErrorSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.ErrorSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.DeleteAdminCustomProvidersIdentifier.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.DeleteAdminCustomProvidersIdentifier.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Invalid identifier format
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/delete/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.DeleteAdminCustomProvidersIdentifier.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.DeleteAdminCustomProvidersIdentifier.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// HTTP Unauthorized response.
+            ///
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/delete/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Components.Responses.UnauthorizedResponse)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Components.Responses.UnauthorizedResponse {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// HTTP Forbidden response.
+            ///
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/delete/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Components.Responses.ForbiddenResponse)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Components.Responses.ForbiddenResponse {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/DELETE/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/admin/custom-providers/{identifier}/DELETE/responses/404/content/application\/json`.
+                    case json(Components.Schemas.ErrorSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.ErrorSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.DeleteAdminCustomProvidersIdentifier.Output.NotFound.Body
+                /// Creates a new `NotFound`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.DeleteAdminCustomProvidersIdentifier.Output.NotFound.Body) {
+                    self.body = body
+                }
+            }
+            /// Provider not found
+            ///
+            /// - Remark: Generated from `#/paths//admin/custom-providers/{identifier}/delete/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.DeleteAdminCustomProvidersIdentifier.Output.NotFound)
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.DeleteAdminCustomProvidersIdentifier.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
                             response: self
                         )
                     }
